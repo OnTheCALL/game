@@ -4,7 +4,7 @@
 
 > Copyright (C) 2018 **"On The CALL"** team
 
-#### In general, and if nothing contradicts this in the following rules, You are NOT allowed to reuse, copy, modify, publish or make anything with codes, pictures, sounds and any other kind of content of this project.
+#### In general, and if nothing contradicts this in the following rules, You are NOT allowed to reuse, copy, modify, publish or modify the coding, pictures, sounds and any other kind of content of this project.
 
 ### Rules :
 
