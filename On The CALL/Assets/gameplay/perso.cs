@@ -8,9 +8,11 @@ public class perso : MonoBehaviour {
 	public float marche = 1.1f;
 	public GameObject myself;
 	public GameObject skin;
-	float rotateSkin = 0.0f;
 	private float moveTx = 0.0f;
 	private float moveTy = 0.0f;
+	public bool inacar = false;
+
+	string[] test1 = { "here", "me", "too" };
 
 	// Use this for initialization
 	void Start () {
@@ -22,19 +24,19 @@ public class perso : MonoBehaviour {
 		moveTx = 0.0f;
 		moveTy = 0.0f;
 		if(Input.GetKey(KeyCode.Z)){
-			moveTy = Time.deltaTime;
+			moveTy = 1.0f;
 		} else if(Input.GetKey (KeyCode.S)){
-			moveTy = -Time.deltaTime;
+			moveTy = -1.0f;
 		}
 		if(Input.GetKey(KeyCode.D)){
-			moveTx = Time.deltaTime;
+			moveTx = 1.0f;
 		} else if(Input.GetKey (KeyCode.Q)){
-			moveTx = -Time.deltaTime;
+			moveTx = -1.0f;
 		}
 		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-			myself.GetComponent<Transform> ().Translate (marche * moveTx, marche * moveTy, 0.0f);
+			myself.GetComponent<Rigidbody> ().velocity = new Vector3 (marche * moveTx, marche * moveTy, 0.0f);
 		} else {
-			myself.GetComponent<Transform> ().Translate (court * moveTx, court * moveTy, 0.0f);
+			myself.GetComponent<Rigidbody> ().velocity = new Vector3 (court * moveTx, court * moveTy, 0.0f);
 		}
 
 		if (moveTx > 0 && moveTy == 0) {
@@ -54,41 +56,21 @@ public class perso : MonoBehaviour {
 		} else if (moveTx < 0 && moveTy < 0) {
 			skin.GetComponent<Transform> ().localRotation = Quaternion.Euler (0.0f, 0.0f, 135.0f);
 		}
-			
+	}
 
-		/*
-		rotateSkin = 0.0f;
-		if (Input.GetKey (KeyCode.Z)) {
-			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-				myself.GetComponent<Transform> ().Translate (0.0f, marche * Time.deltaTime, 0.0f);
-			} else {
-				myself.GetComponent<Transform> ().Translate (0.0f, court * Time.deltaTime, 0.0f);
+	void OnTriggerStay(Collider col){
+		if (Input.GetKeyUp (KeyCode.E)) {
+			
+			if (col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
+				gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", test1, test1);
 			}
-		} else if(Input.GetKey (KeyCode.S)) {
-			rotateSkin = 180.0f;
-			skin.GetComponent<Transform> ().localRotation = Quaternion.Euler (0.0f, 0.0f, 180.0f);
-			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-				myself.GetComponent<Transform> ().Translate (0.0f, -marche * Time.deltaTime, 0.0f);
-			} else {
-				myself.GetComponent<Transform> ().Translate (0.0f, -court * Time.deltaTime, 0.0f);
+		} else if (Input.GetKeyDown (KeyCode.Space)) {
+			
+			if (col.gameObject.GetComponent<EventNamer> ().eventname == "FPT") {
+				if (inacar == false) {
+					col.gameObject.GetComponent<VHC> ().enter (myself, skin);
+				}
 			}
 		}
-		if (Input.GetKey (KeyCode.Q)) {
-			skin.GetComponent<Transform> ().localRotation = Quaternion.Euler (0.0f, 0.0f, 90.0f);
-			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-				myself.GetComponent<Transform> ().Translate (-marche * Time.deltaTime, 0.0f, 0.0f);
-			} else {
-				myself.GetComponent<Transform> ().Translate (-court * Time.deltaTime, 0.0f, 0.0f);
-			}
-		} else if (Input.GetKey (KeyCode.D)) {
-			skin.GetComponent<Transform> ().localRotation = Quaternion.Euler (0.0f, 0.0f, -90.0f);
-			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-				myself.GetComponent<Transform> ().Translate (marche * Time.deltaTime, 0.0f, 0.0f);
-			} else {
-				myself.GetComponent<Transform> ().Translate (court * Time.deltaTime, 0.0f, 0.0f);
-			}
-		} else {
-			skin.GetComponent<Transform> ().localRotation = Quaternion.Euler (0.0f, 0.0f, rotateSkin);
-		}*/
 	}
 }

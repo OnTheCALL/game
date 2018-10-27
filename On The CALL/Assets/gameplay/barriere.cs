@@ -8,6 +8,9 @@ public class barriere : MonoBehaviour {
 	Hashtable closing = new Hashtable();
 	public GameObject bar_L;
 	public GameObject bar_R;
+	// To be compatible in the four direction, if x take 1 or -1, y take 0, and vice-versa
+	public float x_pos_or_neg = 0.0f;
+	public float y_pos_or_neg = -1.0f;
 	Vector3 xPosL;
 	Vector3 xPosR;
 
@@ -38,9 +41,9 @@ public class barriere : MonoBehaviour {
 		iTween.Stop (bar_R);
 		StartCoroutine(Wait(0.1f));
 		iTween.ScaleTo (bar_L, opening);
-		iTween.MoveTo (bar_L, new Vector3 (xPosL.x, xPosL.y - 0.9f, xPosL.z), 2.0f);
+		iTween.MoveTo (bar_L, new Vector3 (xPosL.x + (x_pos_or_neg * 0.9f), xPosL.y + (y_pos_or_neg * 0.9f), xPosL.z), 2.0f);
 		iTween.ScaleTo (bar_R, opening);
-		iTween.MoveTo (bar_R, new Vector3 (xPosR.x, xPosR.y + 0.9f, xPosR.z), 2.0f);
+		iTween.MoveTo (bar_R, new Vector3 (xPosR.x + (x_pos_or_neg * -0.9f), xPosR.y + (y_pos_or_neg * -0.9f), xPosR.z), 2.0f);
 	}
 
 	void OnTriggerExit(Collider col){
