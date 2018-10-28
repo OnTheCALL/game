@@ -27,7 +27,7 @@ public class GridEditor : Editor
 			GameObject obj;
 			//Object prefab =
 			//	EditorUtility.GetPrefabParent(Selection.activeObject);
-			obj = (GameObject)EditorUtility.InstantiatePrefab(grid.prefab);
+			obj = (GameObject)PrefabUtility.InstantiatePrefab(grid.prefab);
 			Vector3 aligned = new Vector3(
 				Mathf.Floor(mousePos.x/grid.width)*grid.width + grid.width/2.0f,
 				Mathf.Floor(mousePos.y/grid.height)*grid.height +
