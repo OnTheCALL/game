@@ -66,7 +66,7 @@ public class perso : MonoBehaviour {
 			}
 		} else if (Input.GetKeyDown (KeyCode.Space)) {
 			
-			if (col.gameObject.GetComponent<EventNamer> ().eventname == "FPT") {
+			if (col.gameObject.GetComponent<EventNamer> ().eventname == "FireEngine") {
 				if (inacar == false) {
 					col.gameObject.GetComponent<VHC> ().enter (myself, skin);
 				}

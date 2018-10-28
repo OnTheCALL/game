@@ -13,6 +13,8 @@ public class barriere : MonoBehaviour {
 	public float y_pos_or_neg = -1.0f;
 	Vector3 xPosL;
 	Vector3 xPosR;
+	bool opened = false;
+	float wait_before_close = 0.0f;// > 0 : opened, wait to close    <= 0 on closing / closed
 
 	// Use this for initialization
 	void Start () {
@@ -22,14 +24,22 @@ public class barriere : MonoBehaviour {
 		//closing.Add ("name", "Closing");
 		closing.Add ("x", 1.0f);
 		//closing.Add ("delay", 0.5f);
-		closing.Add ("time", 3.0f);
+		closing.Add ("time", 2.0f);
 		xPosL = bar_L.GetComponent<Transform> ().position;
 		xPosR = bar_R.GetComponent<Transform> ().position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (wait_before_close > 0.0f) {
+			wait_before_close = wait_before_close - Time.deltaTime;
+		} else if (opened == true) {
+			opened = false;
+			iTween.ScaleTo (bar_L, closing);
+			iTween.MoveTo (bar_L, xPosL, 2.0f);
+			iTween.ScaleTo (bar_R, closing);
+			iTween.MoveTo (bar_R, xPosR, 2.0f);
+		}
 	}
 
 	IEnumerator Wait(float nb){
@@ -37,19 +47,24 @@ public class barriere : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		iTween.Stop (bar_L);
-		iTween.Stop (bar_R);
-		StartCoroutine(Wait(0.1f));
-		iTween.ScaleTo (bar_L, opening);
-		iTween.MoveTo (bar_L, new Vector3 (xPosL.x + (x_pos_or_neg * 0.9f), xPosL.y + (y_pos_or_neg * 0.9f), xPosL.z), 2.0f);
-		iTween.ScaleTo (bar_R, opening);
-		iTween.MoveTo (bar_R, new Vector3 (xPosR.x + (x_pos_or_neg * -0.9f), xPosR.y + (y_pos_or_neg * -0.9f), xPosR.z), 2.0f);
+		if (opened == false) {
+			wait_before_close = 1.0f;
+			opened = true;
+			iTween.Stop (bar_L);
+			iTween.Stop (bar_R);
+			StartCoroutine (Wait (0.1f));
+			iTween.ScaleTo (bar_L, opening);
+			iTween.MoveTo (bar_L, new Vector3 (xPosL.x + (x_pos_or_neg * 0.9f), xPosL.y + (y_pos_or_neg * 0.9f), xPosL.z), 2.0f);
+			iTween.ScaleTo (bar_R, opening);
+			iTween.MoveTo (bar_R, new Vector3 (xPosR.x + (x_pos_or_neg * -0.9f), xPosR.y + (y_pos_or_neg * -0.9f), xPosR.z), 2.0f);
+		}
+	}
+
+	void OnTriggerStay(Collider col){
+		wait_before_close = 1.0f;
 	}
 
 	void OnTriggerExit(Collider col){
-		iTween.ScaleTo (bar_L, closing);
-		iTween.MoveTo (bar_L, xPosL, 3.0f);
-		iTween.ScaleTo (bar_R, closing);
-		iTween.MoveTo (bar_R, xPosR, 3.0f);
+		
 	}
 }
