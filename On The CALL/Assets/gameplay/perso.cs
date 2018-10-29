@@ -6,11 +6,19 @@ public class perso : MonoBehaviour {
 
 	public float court = 2.7f;
 	public float marche = 1.1f;
-	public GameObject myself;
 	public GameObject skin;
+	public GameObject World;
 	private float moveTx = 0.0f;
 	private float moveTy = 0.0f;
 	public bool inacar = false;
+	public List<GameObject> CollideMe = new List<GameObject>();
+
+	public bool goUp = false;
+	public bool goDown = false;
+	public bool goLeft = false;
+	public bool goRight = false;
+	public bool iswalking = true;
+
 
 	// Use this for initialization
 	void Start () {
@@ -21,20 +29,20 @@ public class perso : MonoBehaviour {
 	void Update () {
 		moveTx = 0.0f;
 		moveTy = 0.0f;
-		if(Input.GetKey(KeyCode.Z)){
+		if(goUp){
 			moveTy = 1.0f;
-		} else if(Input.GetKey (KeyCode.S)){
+		} else if(goDown){
 			moveTy = -1.0f;
 		}
-		if(Input.GetKey(KeyCode.D)){
+		if(goRight){
 			moveTx = 1.0f;
-		} else if(Input.GetKey (KeyCode.Q)){
+		} else if(goLeft){
 			moveTx = -1.0f;
 		}
-		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-			myself.GetComponent<Rigidbody> ().velocity = new Vector3 (marche * moveTx, marche * moveTy, 0.0f);
+		if (iswalking) {
+			gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (marche * moveTx, marche * moveTy, 0.0f);
 		} else {
-			myself.GetComponent<Rigidbody> ().velocity = new Vector3 (court * moveTx, court * moveTy, 0.0f);
+			gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (court * moveTx, court * moveTy, 0.0f);
 		}
 
 		if (moveTx > 0 && moveTy == 0) {
@@ -56,25 +64,9 @@ public class perso : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerStay(Collider col){
-		if (Input.GetKeyUp (KeyCode.E)) {
-			
-			if (col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
-				gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", "Regarder mon affectation", "set affectation", "Prendre feuille route", "take departure paper");
-			}
-		} else if (Input.GetKeyDown (KeyCode.Space)) {
-			
-			if (col.gameObject.GetComponent<EventNamer> ().eventname == "FireEngine") {
-				if (inacar == false) {
-					col.gameObject.GetComponent<VHC> ().enter (myself, skin);
-				}
-			}
-		}
-	}
-
 	void OnTriggerExit(Collider col){
 		if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
-			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			World.GetComponent<IG_menu> ().CloseMenu ();
 		}
 	}
 }

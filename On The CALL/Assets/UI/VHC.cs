@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class VHC : MonoBehaviour {
 
+	public bool Imdriver = false;
 	GameObject camOBJ;
 	GameObject skintohide;
 	public float Direction = 0.0f;
+	public float maxspeed = 10.0f;
 	float speed = 0.0f;
 	float tox = 0.0f;
 	float toy = 0.0f;
-	bool readSpace = true;
 	public GameObject spawn_door;
 	public GameObject[] gyros;
 	float toggleGyro = 0.25f;
@@ -23,7 +24,7 @@ public class VHC : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (camOBJ != null && camOBJ != false) {
+		if (Imdriver) {
 			gameObject.GetComponent<Rigidbody> ().drag = 1;
 			gameObject.GetComponent<Rigidbody> ().angularDrag = 1;
 			camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x, gameObject.GetComponent<Transform> ().position.y, -10.0f);
@@ -59,43 +60,6 @@ public class VHC : MonoBehaviour {
 			tox = -Mathf.Sin (Mathf.Deg2Rad * Direction) * speed;
 			toy = Mathf.Cos (Mathf.Deg2Rad * Direction) * speed;
 			gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (tox, toy, 0.0f);
-			if (Input.GetKeyDown (KeyCode.Space) && readSpace == true) {
-				exit ();
-			}
-			if (Input.GetKeyUp (KeyCode.Space)) {
-				readSpace = true;
-			}
-
-			if (Input.GetKeyDown (KeyCode.Alpha1)) {
-				code_alerte = 1;
-				toggleGyro = 0.25f;
-				for (int i = 0; i < gyros.Length; i++) {
-					gyros [i].GetComponent<SpriteRenderer> ().enabled = false;
-				}
-			} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-				if (code_alerte == 1) {
-					toggleGyro = 0.25f;
-					gyros [0].GetComponent<SpriteRenderer> ().enabled = true;
-					if (gyros.Length > 1) {
-						for (int i = 1; i < gyros.Length; i++) {
-							gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i - 1].GetComponent<SpriteRenderer> ().enabled);
-						}
-					}
-				}
-				code_alerte = 2;
-			} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-				if (code_alerte == 1) {
-					toggleGyro = 0.25f;
-					gyros [0].GetComponent<SpriteRenderer> ().enabled = true;
-					if (gyros.Length > 1) {
-						for (int i = 1; i < gyros.Length; i++) {
-							gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i - 1].GetComponent<SpriteRenderer> ().enabled);
-						}
-					}
-				}
-				gameObject.GetComponent<AudioSource> ().Play ();
-				code_alerte = 3;
-			}
 				
 		}else {
 			gameObject.GetComponent<Rigidbody> ().drag = 100;
@@ -116,12 +80,45 @@ public class VHC : MonoBehaviour {
 		}
 	}
 
+	public void change_code(int code, bool force){
+		if (Imdriver == true || force == true) {
+			if (code == 1) {
+				toggleGyro = 0.25f;
+				for (int i = 0; i < gyros.Length; i++) {
+					gyros [i].GetComponent<SpriteRenderer> ().enabled = false;
+				}
+			} else if (code == 2) {
+				if (code_alerte == 1) {
+					toggleGyro = 0.25f;
+					gyros [0].GetComponent<SpriteRenderer> ().enabled = true;
+					if (gyros.Length > 1) {
+						for (int i = 1; i < gyros.Length; i++) {
+							gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i - 1].GetComponent<SpriteRenderer> ().enabled);
+						}
+					}
+				}
+			} else if (code == 3) {
+				if (code_alerte == 1) {
+					toggleGyro = 0.25f;
+					gyros [0].GetComponent<SpriteRenderer> ().enabled = true;
+					if (gyros.Length > 1) {
+						for (int i = 1; i < gyros.Length; i++) {
+							gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i - 1].GetComponent<SpriteRenderer> ().enabled);
+						}
+					}
+				}
+				gameObject.GetComponent<AudioSource> ().Play ();
+			}
+			code_alerte = code;
+		}
+	}
+
 	public void enter (GameObject perso, GameObject skin){
-		readSpace = false;
 		perso.GetComponent<BoxCollider> ().enabled = false;
 		perso.GetComponent<perso> ().inacar = true;
 		perso.GetComponentInChildren<Camera> ().orthographicSize = 8.0f;
 		camOBJ = perso;
+		Imdriver = true;
 		skintohide = skin;
 		skintohide.GetComponent<SpriteRenderer> ().enabled = false;
 	}
@@ -133,6 +130,7 @@ public class VHC : MonoBehaviour {
 		camOBJ.GetComponent<Transform> ().position = new Vector3(spawn_door.GetComponent<Transform>().position.x, spawn_door.GetComponent<Transform>().position.y, -10.0f);
 		camOBJ.GetComponent<perso> ().inacar = false;
 		camOBJ = null;
+		Imdriver = false;
 		skintohide = null;
 	}
 }
