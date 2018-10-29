@@ -12,6 +12,9 @@ public class VHC : MonoBehaviour {
 	float toy = 0.0f;
 	bool readSpace = true;
 	public GameObject spawn_door;
+	public GameObject[] gyros;
+	float toggleGyro = 0.25f;
+	public int code_alerte = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +39,7 @@ public class VHC : MonoBehaviour {
 			} else if (speed > 0.05f) {
 				speed = speed - 0.05f;
 			} else if (speed < -0.05f) {
-				speed = speed + 0.05f;
+				speed = speed + 0.05f; 
 			} else {
 				speed = 0.0f;
 			}
@@ -62,9 +65,54 @@ public class VHC : MonoBehaviour {
 			if (Input.GetKeyUp (KeyCode.Space)) {
 				readSpace = true;
 			}
+
+			if (Input.GetKeyDown (KeyCode.Alpha1)) {
+				code_alerte = 1;
+				toggleGyro = 0.25f;
+				for (int i = 0; i < gyros.Length; i++) {
+					gyros [i].GetComponent<SpriteRenderer> ().enabled = false;
+				}
+			} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+				if (code_alerte == 1) {
+					toggleGyro = 0.25f;
+					gyros [0].GetComponent<SpriteRenderer> ().enabled = true;
+					if (gyros.Length > 1) {
+						for (int i = 1; i < gyros.Length; i++) {
+							gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i - 1].GetComponent<SpriteRenderer> ().enabled);
+						}
+					}
+				}
+				code_alerte = 2;
+			} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
+				if (code_alerte == 1) {
+					toggleGyro = 0.25f;
+					gyros [0].GetComponent<SpriteRenderer> ().enabled = true;
+					if (gyros.Length > 1) {
+						for (int i = 1; i < gyros.Length; i++) {
+							gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i - 1].GetComponent<SpriteRenderer> ().enabled);
+						}
+					}
+				}
+				gameObject.GetComponent<AudioSource> ().Play ();
+				code_alerte = 3;
+			}
+				
 		}else {
 			gameObject.GetComponent<Rigidbody> ().drag = 100;
 			gameObject.GetComponent<Rigidbody> ().angularDrag = 100;
+		}
+
+		if (code_alerte > 1) {
+			toggleGyro = toggleGyro - Time.deltaTime;
+			if (toggleGyro <= 0) {
+				toggleGyro = toggleGyro + 0.25f;
+				for (int i = 0; i < gyros.Length; i++) {
+					gyros [i].GetComponent<SpriteRenderer> ().enabled = !(gyros [i].GetComponent<SpriteRenderer> ().enabled);
+				}
+			}
+		}
+		if (code_alerte < 3 && gameObject.GetComponent<AudioSource> ().isPlaying == true) {
+			gameObject.GetComponent<AudioSource> ().Stop ();
 		}
 	}
 

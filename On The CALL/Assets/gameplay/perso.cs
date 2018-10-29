@@ -12,8 +12,6 @@ public class perso : MonoBehaviour {
 	private float moveTy = 0.0f;
 	public bool inacar = false;
 
-	string[] test1 = { "here", "me", "too" };
-
 	// Use this for initialization
 	void Start () {
 		
@@ -62,7 +60,7 @@ public class perso : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.E)) {
 			
 			if (col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
-				gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", test1, test1);
+				gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", "Regarder mon affectation", "set affectation", "Prendre feuille route", "take departure paper");
 			}
 		} else if (Input.GetKeyDown (KeyCode.Space)) {
 			
@@ -71,6 +69,12 @@ public class perso : MonoBehaviour {
 					col.gameObject.GetComponent<VHC> ().enter (myself, skin);
 				}
 			}
+		}
+	}
+
+	void OnTriggerExit(Collider col){
+		if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 		}
 	}
 }
