@@ -9,6 +9,7 @@ public class keyListener : MonoBehaviour {
 	private bool listen_goLeft = true;
 	private bool listen_goRight = true;*/
 	private bool listen_Interact = true;
+	private bool listen_cone = true;
 	private bool listen_getput = true;
 	private bool listen_car = true;
 	private bool listen_menu1 = true;
@@ -117,36 +118,49 @@ public class keyListener : MonoBehaviour {
 			listen_car = false;
 			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
 				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().enter (gameObject, gameObject.GetComponent<perso> ().skin);
-			}
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("entervhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().VHCname);
+			} 
 		}
 		if (listen_car && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_car","Space"))) && gameObject.GetComponent<perso>().inacar == true) {
 			listen_car = false;
 			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
 				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().exit ();
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("exitvhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString());
 			}
 		}
 		if (listen_code1 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_code1","1"))) && gameObject.GetComponent<perso>().inacar == true) {
 			listen_code1 = false;
 			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
 				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (1, false);
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), "1");
 			}
 		}
 		if (listen_code2 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_code2","2"))) && gameObject.GetComponent<perso>().inacar == true) {
 			listen_code2 = false;
 			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
 				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (2, false);
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), "2");
 			}
 		}
 		if (listen_code3 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_code3","3"))) && gameObject.GetComponent<perso>().inacar == true) {
 			listen_code3 = false;
 			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
 				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (3, false);
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), "3");
 			}
 		}
 		if (listen_Interact && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_interact","E"))) && gameObject.GetComponent<perso>().inacar == false) {
 			listen_Interact = false;
 			if (gameObject.GetComponent<getCollides> ().nearOrdi == true) {
 				gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Ordi");
+			}
+		}
+		if (listen_cone && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_cone","C"))) && gameObject.GetComponent<perso>().inacar == false) {
+			listen_cone = false;
+			if (gameObject.GetComponent<getCollides> ().nearCone == null) {
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("addcone", gameObject.GetComponent<Transform> ().position.x.ToString (), (gameObject.GetComponent<Transform> ().position.y + 1.0f).ToString ());
+			} else {
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("remcone", gameObject.GetComponent<getCollides>().nearCone.GetComponent<NetID>().ID.ToString());
 			}
 		}
 
@@ -177,6 +191,9 @@ public class keyListener : MonoBehaviour {
 		}
 		if (gameObject.GetComponent<perso>().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_interact", "E")))) {
 			listen_Interact = true;
+		}
+		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C")))) {
+			listen_cone = true;
 		}
 	}
 }

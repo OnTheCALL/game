@@ -11,7 +11,7 @@ public class perso : MonoBehaviour {
 	private float moveTx = 0.0f;
 	private float moveTy = 0.0f;
 	public bool inacar = false;
-	public List<GameObject> CollideMe = new List<GameObject>();
+	public float rotation = 0.0f;
 
 	public bool goUp = false;
 	public bool goDown = false;
@@ -23,6 +23,10 @@ public class perso : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
+	}
+
+	public void setVHCrot(float zaxis){
+		rotation = zaxis;
 	}
 	
 	// Update is called once per frame

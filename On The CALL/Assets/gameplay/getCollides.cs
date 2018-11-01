@@ -6,6 +6,7 @@ public class getCollides : MonoBehaviour {
 
 	public GameObject nearVhc;
 	public bool nearOrdi = false;
+	public GameObject nearCone;     //web cone obviously
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,8 @@ public class getCollides : MonoBehaviour {
 	void OnTriggerEnter (Collider col) {
 		if (col.gameObject.GetComponent<VHC> () != null) {
 			nearVhc = col.gameObject;
+		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "net_cone") {
+			nearCone = col.gameObject;
 		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
 			nearOrdi = true;
 		}
@@ -28,6 +31,8 @@ public class getCollides : MonoBehaviour {
 	void OnTriggerStay(Collider col){
 		if (col.gameObject.GetComponent<VHC> () != null && nearVhc == null) {
 			nearVhc = col.gameObject;
+		} else if (col.gameObject.GetComponent<EventNamer> () != null && nearCone == null && col.gameObject.GetComponent<EventNamer> ().eventname == "net_cone") {
+			nearCone = col.gameObject;
 		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
 			nearOrdi = true;
 		}
@@ -36,6 +41,8 @@ public class getCollides : MonoBehaviour {
 	void OnTriggerExit (Collider col) {
 		if (col.gameObject.GetComponent<VHC> () != null) {
 			nearVhc = null;
+		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "net_cone") {
+			nearCone = null;
 		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
 			nearOrdi = false;
 		}

@@ -47,24 +47,28 @@ public class barriere : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (opened == false) {
-			wait_before_close = 1.0f;
-			opened = true;
-			iTween.Stop (bar_L);
-			iTween.Stop (bar_R);
-			StartCoroutine (Wait (0.1f));
-			iTween.ScaleTo (bar_L, opening);
-			iTween.MoveTo (bar_L, new Vector3 (xPosL.x + (x_pos_or_neg * 0.9f), xPosL.y + (y_pos_or_neg * 0.9f), xPosL.z), 2.0f);
-			iTween.ScaleTo (bar_R, opening);
-			iTween.MoveTo (bar_R, new Vector3 (xPosR.x + (x_pos_or_neg * -0.9f), xPosR.y + (y_pos_or_neg * -0.9f), xPosR.z), 2.0f);
+		if (col.gameObject.tag == "barriereOpenner") {
+			if (opened == false) {
+				wait_before_close = 1.0f;
+				opened = true;
+				iTween.Stop (bar_L);
+				iTween.Stop (bar_R);
+				StartCoroutine (Wait (0.1f));
+				iTween.ScaleTo (bar_L, opening);
+				iTween.MoveTo (bar_L, new Vector3 (xPosL.x + (x_pos_or_neg * 0.9f), xPosL.y + (y_pos_or_neg * 0.9f), xPosL.z), 2.0f);
+				iTween.ScaleTo (bar_R, opening);
+				iTween.MoveTo (bar_R, new Vector3 (xPosR.x + (x_pos_or_neg * -0.9f), xPosR.y + (y_pos_or_neg * -0.9f), xPosR.z), 2.0f);
+			}
 		}
 	}
 
 	void OnTriggerStay(Collider col){
-		wait_before_close = 1.0f;
+		if (col.gameObject.tag == "barriereOpenner") {
+			wait_before_close = 1.0f;
+		}
 	}
 
-	void OnTriggerExit(Collider col){
+	/*void OnTriggerExit(Collider col){
 		
-	}
+	}*/
 }
