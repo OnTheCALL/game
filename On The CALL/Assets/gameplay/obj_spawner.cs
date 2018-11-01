@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class obj_spawner : MonoBehaviour {
 
-	public string in_hand = "gants";
+	/*public string in_hand = "gants";
 	GameObject near_cone;
 	public GameObject cone_model;
-	bool listenC = true;
+	bool listenC = true;*/
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +16,7 @@ public class obj_spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyUp(KeyCode.C)){
+		/*if(Input.GetKeyUp(KeyCode.C)){
 			listenC = true;
 		}
 
@@ -27,9 +27,9 @@ public class obj_spawner : MonoBehaviour {
 				Destroy (near_cone);
 				near_cone = null;
 			}
-		}
+		}*/
 	}
-
+	/*
 	void OnTriggerStay(Collider otherobj){
 		if (otherobj.gameObject.GetComponent<EventNamer> () != null && otherobj.gameObject.GetComponent<EventNamer> ().eventname == "cone") {
 			near_cone = otherobj.gameObject;
@@ -40,5 +40,5 @@ public class obj_spawner : MonoBehaviour {
 		if (otherobj.gameObject.GetComponent<EventNamer> () != null && otherobj.gameObject.GetComponent<EventNamer> ().eventname == "cone") {
 			near_cone = null;
 		}
-	}
+	}*/
 }
