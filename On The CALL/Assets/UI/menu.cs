@@ -6,16 +6,20 @@ using UnityEngine.UI;
 
 public class menu : MonoBehaviour {
 
-	public GameObject pseudo;
-	public GameObject pass;
+	public GameObject pseudo_parent;
+	public GameObject pass_parent;
 
 	public GameObject[] toDisable;
 	public GameObject loadtext;
 
 	// Use this for initialization
 	void Start () {
-		pseudo.GetComponent<Text> ().text = PlayerPrefs.GetString ("user_name", "");
-		pass.GetComponent<Text> ().text = PlayerPrefs.GetString ("user_password", "");
+		fetch_text ();
+	}
+
+	void fetch_text(){
+		pseudo_parent.GetComponent<InputField> ().text = PlayerPrefs.GetString ("user_name", "");
+		pass_parent.GetComponent<InputField> ().text = PlayerPrefs.GetString ("user_password", "");
 	}
 	
 	// Update is called once per frame
@@ -28,15 +32,18 @@ public class menu : MonoBehaviour {
 			toDisable [i].GetComponent<Button> ().interactable = false;
 		}
 		loadtext.GetComponent<Text> ().text = "Loading ...";
+		PlayerPrefs.SetString ("user_name", pseudo_parent.GetComponent<InputField> ().text);
+		PlayerPrefs.SetString ("user_password", pass_parent.GetComponent<InputField> ().text);
+		PlayerPrefs.Save ();
 		SceneManager.LoadSceneAsync (nb);
 	}
 
 	public void MAJuser(){
-		PlayerPrefs.SetString ("user_name", pseudo.GetComponent<Text> ().text);
+		PlayerPrefs.SetString ("user_name", pseudo_parent.GetComponent<InputField> ().text);
 		PlayerPrefs.Save ();
 	}
 	public void MAJpass(){
-		PlayerPrefs.SetString ("user_password", pass.GetComponent<Text> ().text);
+		PlayerPrefs.SetString ("user_password", pass_parent.GetComponent<InputField> ().text);
 		PlayerPrefs.Save ();
 	}
 }

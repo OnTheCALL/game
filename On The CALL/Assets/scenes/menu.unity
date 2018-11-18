@@ -1198,8 +1198,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1753602592}
   m_TextComponent: {fileID: 548899589}
   m_Placeholder: {fileID: 2030619764}
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -1348,8 +1348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53ab84c312c611429d01d535ced8d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pseudo: {fileID: 673776079}
-  pass: {fileID: 548899587}
+  pseudo_parent: {fileID: 185485807}
+  pass_parent: {fileID: 1753602589}
   toDisable:
   - {fileID: 416905338}
   loadtext: {fileID: 1564109369}
