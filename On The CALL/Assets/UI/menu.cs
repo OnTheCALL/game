@@ -8,6 +8,8 @@ public class menu : MonoBehaviour {
 
 	public GameObject pseudo_parent;
 	public GameObject pass_parent;
+	public GameObject maj_text;
+	int isuptodate = -1;
 
 	public GameObject[] toDisable;
 	public GameObject loadtext;
