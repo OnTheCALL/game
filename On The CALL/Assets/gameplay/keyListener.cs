@@ -19,6 +19,7 @@ public class keyListener : MonoBehaviour {
 	private bool listen_code1 = true;
 	private bool listen_code2 = true;
 	private bool listen_code3 = true;
+	private bool listen_echap = true;
 
 	public KeyCode convertKey (string name){
 		if (name == "A") { return KeyCode.A; }
@@ -52,6 +53,7 @@ public class keyListener : MonoBehaviour {
 		else if (name == "Left Ctrl") { return KeyCode.LeftControl; }
 		else if (name == "Right Ctrl") { return KeyCode.RightControl; }
 		else if (name == "Space") { return KeyCode.Space; }
+		else if (name == "Echap") { return KeyCode.Escape; }
 		else if (name == "0") { return KeyCode.Alpha0; }
 		else if (name == "1") { return KeyCode.Alpha1; }
 		else if (name == "2") { return KeyCode.Alpha2; }
@@ -85,6 +87,7 @@ public class keyListener : MonoBehaviour {
 			PlayerPrefs.SetString ("keyboard_menu2", "2");
 			PlayerPrefs.SetString ("keyboard_menu3", "3");
 			PlayerPrefs.SetString ("keyboard_menu4", "4");
+			PlayerPrefs.SetString ("keyboard_echap", "Echap");
 			PlayerPrefs.SetInt ("AlreadySet", 1);
 			PlayerPrefs.Save ();
 		}
@@ -163,6 +166,10 @@ public class keyListener : MonoBehaviour {
 				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("remcone", gameObject.GetComponent<getCollides>().nearCone.GetComponent<NetID>().ID.ToString());
 			}
 		}
+		if (listen_echap && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_echap","Echap")))) {
+			listen_echap = false;
+			gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().TogglePause ();
+		}
 
 		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_car", "Space")))) {
 			listen_car = true;
@@ -194,6 +201,9 @@ public class keyListener : MonoBehaviour {
 		}
 		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C")))) {
 			listen_cone = true;
+		}
+		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_echap", "Echap")))) {
+			listen_echap = true;
 		}
 	}
 }
