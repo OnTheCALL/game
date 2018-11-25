@@ -7,7 +7,7 @@ using SimpleJSON;
 
 public class menu : MonoBehaviour {
 
-	public string VERSION_ACTUAL = "0.3.0-dev2";
+	public string VERSION_ACTUAL = "0.3.0-dev3";
 
 	public GameObject pseudo_parent;
 	public GameObject pass_parent;
