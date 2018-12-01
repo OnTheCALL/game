@@ -47,10 +47,12 @@ public class menu : MonoBehaviour {
 				foreach (string line in datas) {
 					if (line == VERSION_ACTUAL) {
 						isuptodate = 1;
+						Debug.Log ("Finded Version");
 						maj_text.GetComponent<Text> ().text = "Version : " + VERSION_ACTUAL + "\n\nMise à jour disponible !";
 					}
 				}
 				if (isuptodate != 1) {
+					Debug.Log ("Incorrect version");
 					maj_text.GetComponent<Text> ().text = "Version : " + VERSION_ACTUAL + "\n\nMise à jour obligatoire !";
 				}
 			}

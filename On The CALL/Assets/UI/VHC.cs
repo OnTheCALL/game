@@ -33,7 +33,7 @@ public class VHC : MonoBehaviour {
 		if (camOBJ != null && camOBJ.GetComponent<perso>().inacar == true) {
 			gameObject.GetComponent<Rigidbody> ().drag = 1;
 			gameObject.GetComponent<Rigidbody> ().angularDrag = 1;
-			//camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x, gameObject.GetComponent<Transform> ().position.y, -10.0f);
+			camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x, gameObject.GetComponent<Transform> ().position.y, -10.0f);
 
 			if (Imdriver) {
 				if (Input.GetKey (KeyCode.Z) && speed < -0.1f) {
@@ -69,9 +69,9 @@ public class VHC : MonoBehaviour {
 				tox = -Mathf.Sin (Mathf.Deg2Rad * Direction) * speed;
 				toy = Mathf.Cos (Mathf.Deg2Rad * Direction) * speed;
 				gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (tox, toy, 0.0f);
-				float decalx = -Mathf.Sin (Mathf.Deg2Rad * Direction) * 5;
-				float decaly = Mathf.Cos (Mathf.Deg2Rad * Direction) * 5;
-				camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x + decalx, gameObject.GetComponent<Transform> ().position.y + decaly, -10.0f);
+				//float decalx = -Mathf.Sin (Mathf.Deg2Rad * Direction) * 5;
+				//float decaly = Mathf.Cos (Mathf.Deg2Rad * Direction) * 5;
+				//camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x + decalx, gameObject.GetComponent<Transform> ().position.y + decaly, -10.0f);
 			}
 				
 		}else {

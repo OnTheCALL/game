@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
+using AOT;
 
 public class echap_menu : MonoBehaviour {
 
@@ -75,5 +79,13 @@ public class echap_menu : MonoBehaviour {
 
 	public void DEV_respawn (){
 		gameObject.GetComponent<actions> ().main_character.GetComponent<Transform> ().position = new Vector3 (36.42f, -7.6f, -10.0f);
+	}
+
+	public void Discord_start_test(){
+		
+	}
+
+	public void Discord_stop_test(){
+		
 	}
 }
