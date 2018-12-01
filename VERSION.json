@@ -1,6 +1,6 @@
 {
-    "Public_Version" : "0.3.0-dev3",
-    "Alpha_Version" : "0.3.0-dev3",
+    "Public_Version" : "0.3.0",
+    "Alpha_Version" : "0.3.0",
     "Dev_Version" : "0.3.0-dev3",
     "Compatible" : "0.3.0-dev3#0.3.0-dev1#0.3.0"
 }
