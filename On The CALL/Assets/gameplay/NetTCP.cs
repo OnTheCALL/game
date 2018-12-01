@@ -20,6 +20,7 @@ public class NetTCP : MonoBehaviour {
 
 	public void inited(int ID, string grade){
 		gameObject.GetComponent<NetUDP> ().OnNetReady (ID);
+		gameObject.GetComponent<discordController> ().Grade = grade;
 		gameObject.GetComponent<IG_menu> ().set_bip_msg("GRADE : " + grade + "\n\nSTATUS : DISPONIBLE");
 	}
 
