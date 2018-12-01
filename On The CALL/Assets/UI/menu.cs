@@ -7,7 +7,7 @@ using SimpleJSON;
 
 public class menu : MonoBehaviour {
 
-	public string VERSION_ACTUAL = "0.3.0-dev3";
+	public string VERSION_ACTUAL = "0.3.0";
 
 	public GameObject pseudo_parent;
 	public GameObject pass_parent;
@@ -33,7 +33,7 @@ public class menu : MonoBehaviour {
 
 	IEnumerator fetchVersion (){
 		downloadFM = null;
-		downloadFM = new WWW ("https://raw.githubusercontent.com/OnTheCALL/game/dev0.3/VERSION.json");
+		downloadFM = new WWW ("https://raw.githubusercontent.com/OnTheCALL/game/master/VERSION.json");
 		yield return downloadFM;
 		if (string.IsNullOrEmpty (downloadFM.error)) {
 			monObjFM = JSON.Parse (downloadFM.text);
