@@ -24,6 +24,7 @@ public class GridEditor : Editor
 		Vector3 mousePos = r.origin;
 		if(e.isKey && e.character == 'a')
 		{
+			grid.placeOnNext = false;
 			GameObject obj;
 			//Object prefab =
 			//	EditorUtility.GetPrefabParent(Selection.activeObject);

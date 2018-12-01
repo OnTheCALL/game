@@ -15,7 +15,8 @@ public class IG_menu : MonoBehaviour {
 	public GameObject hours_text;
 	public GameObject truck_text;
 	public GameObject bip_text;
-	public GameObject chat_text;
+	public GameObject chat_text_1;
+	public GameObject chat_text_2;
 
 	// Use this for initialization
 	void Start () {
@@ -84,6 +85,7 @@ public class IG_menu : MonoBehaviour {
 		bip_text.GetComponent<Text>().text = text;
 	}
 	public void update_chat(string text){
-		chat_text.GetComponent<Text>().text = text;
+		chat_text_1.GetComponent<Text>().text = text;
+		chat_text_2.GetComponent<Text>().text = text;
 	}
 }

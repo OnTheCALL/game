@@ -61,7 +61,7 @@ public class NetUDP : MonoBehaviour {
 				string[] cmds = rawdata.Split ('&');
 				foreach (string cmd in cmds) {
 					string[] cmds2 = cmd.Split ('#');
-					if (cmds2 [0] == "fetchedpos") {
+					if (cmds2 [0] == "fetchedpos" && int.Parse (cmds2 [1]) != playerID) {
 						if (listPlayer [int.Parse (cmds2 [1])] != null) {
 							listPlayer [int.Parse (cmds2 [1])].GetComponent<Transform> ().position = new Vector3 (float.Parse (cmds2 [2]), float.Parse (cmds2 [3]), -8.0f);
 						} else {
