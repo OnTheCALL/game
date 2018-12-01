@@ -95,112 +95,128 @@ public class keyListener : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		gameObject.GetComponent<perso> ().goUp = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goUp", "Z"))) && gameObject.GetComponent<perso> ().inacar == false;
-		gameObject.GetComponent<perso> ().goDown = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goDown", "S"))) && gameObject.GetComponent<perso> ().inacar == false;
-		gameObject.GetComponent<perso> ().goLeft = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goLeft", "Q"))) && gameObject.GetComponent<perso> ().inacar == false;
-		gameObject.GetComponent<perso> ().goRight = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goRight", "D"))) && gameObject.GetComponent<perso> ().inacar == false;
-		gameObject.GetComponent<perso> ().iswalking = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_walk", "Left Shift"))) && gameObject.GetComponent<perso> ().inacar == false;
+		if (gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().OnPause == false) {
+			gameObject.GetComponent<perso> ().goUp = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goUp", "Z"))) && gameObject.GetComponent<perso> ().inacar == false;
+			gameObject.GetComponent<perso> ().goDown = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goDown", "S"))) && gameObject.GetComponent<perso> ().inacar == false;
+			gameObject.GetComponent<perso> ().goLeft = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goLeft", "Q"))) && gameObject.GetComponent<perso> ().inacar == false;
+			gameObject.GetComponent<perso> ().goRight = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goRight", "D"))) && gameObject.GetComponent<perso> ().inacar == false;
+			gameObject.GetComponent<perso> ().iswalking = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_walk", "Left Shift"))) && gameObject.GetComponent<perso> ().inacar == false;
 
-		if (listen_menu1 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_menu1","1"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_menu1 = false;
-			gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press1 ();
-		}
-		if (listen_menu2 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_menu2","2"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_menu2 = false;
-			gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press2 ();
-		}
-		if (listen_menu3 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_menu3","3"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_menu3 = false;
-			gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press3 ();
-		}
-		if (listen_menu4 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_menu4","4"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_menu4 = false;
-			gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press4 ();
-		}
-		if (listen_car && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_car","Space"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_car = false;
-			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
-				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().enter (gameObject, gameObject.GetComponent<perso> ().skin);
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("entervhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().VHCname);
-			} 
-		}
-		if (listen_car && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_car","Space"))) && gameObject.GetComponent<perso>().inacar == true) {
-			listen_car = false;
-			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
-				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().exit ();
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("exitvhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString());
+			if (listen_menu1 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_menu1", "1"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_menu1 = false;
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press1 ();
 			}
-		}
-		if (listen_code1 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_code1","1"))) && gameObject.GetComponent<perso>().inacar == true) {
-			listen_code1 = false;
-			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
-				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (1, false);
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), "1");
+			if (listen_menu2 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_menu2", "2"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_menu2 = false;
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press2 ();
 			}
-		}
-		if (listen_code2 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_code2","2"))) && gameObject.GetComponent<perso>().inacar == true) {
-			listen_code2 = false;
-			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
-				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (2, false);
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), "2");
+			if (listen_menu3 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_menu3", "3"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_menu3 = false;
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press3 ();
 			}
-		}
-		if (listen_code3 && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_code3","3"))) && gameObject.GetComponent<perso>().inacar == true) {
-			listen_code3 = false;
-			if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
-				gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (3, false);
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork>().ID.ToString(), "3");
+			if (listen_menu4 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_menu4", "4"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_menu4 = false;
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().press4 ();
 			}
-		}
-		if (listen_Interact && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_interact","E"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_Interact = false;
-			if (gameObject.GetComponent<getCollides> ().nearOrdi == true) {
-				gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Ordi");
+			if (listen_car && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_car", "Space"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_car = false;
+				if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
+					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().enter (gameObject, gameObject.GetComponent<perso> ().skin);
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("entervhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork> ().ID.ToString (), gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().VHCname);
+				} 
 			}
-		}
-		if (listen_cone && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_cone","C"))) && gameObject.GetComponent<perso>().inacar == false) {
-			listen_cone = false;
-			if (gameObject.GetComponent<getCollides> ().nearCone == null) {
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("addcone", gameObject.GetComponent<Transform> ().position.x.ToString (), (gameObject.GetComponent<Transform> ().position.y + 1.0f).ToString ());
-			} else {
-				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("remcone", gameObject.GetComponent<getCollides>().nearCone.GetComponent<NetID>().ID.ToString());
+			if (listen_car && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_car", "Space"))) && gameObject.GetComponent<perso> ().inacar == true) {
+				listen_car = false;
+				if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
+					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().exit ();
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("exitvhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork> ().ID.ToString ());
+				}
 			}
-		}
-		if (listen_echap && Input.GetKeyDown(convertKey(PlayerPrefs.GetString("keyboard_echap","Echap")))) {
-			listen_echap = false;
-			gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().TogglePause ();
-		}
+			if (listen_code1 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_code1", "1"))) && gameObject.GetComponent<perso> ().inacar == true) {
+				listen_code1 = false;
+				if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
+					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (1, false);
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork> ().ID.ToString (), "1");
+				}
+			}
+			if (listen_code2 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_code2", "2"))) && gameObject.GetComponent<perso> ().inacar == true) {
+				listen_code2 = false;
+				if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
+					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (2, false);
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork> ().ID.ToString (), "2");
+				}
+			}
+			if (listen_code3 && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_code3", "3"))) && gameObject.GetComponent<perso> ().inacar == true) {
+				listen_code3 = false;
+				if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
+					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().change_code (3, false);
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("codevhc", gameObject.GetComponent<perso> ().World.GetComponent<fromNetwork> ().ID.ToString (), "3");
+				}
+			}
+			if (listen_Interact && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_interact", "E"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_Interact = false;
+				if (gameObject.GetComponent<getCollides> ().nearOrdi == true) {
+					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Ordi");
+				}
+			}
+			if (listen_cone && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C"))) && gameObject.GetComponent<perso> ().inacar == false) {
+				listen_cone = false;
+				if (gameObject.GetComponent<getCollides> ().nearCone == null) {
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("addcone", gameObject.GetComponent<Transform> ().position.x.ToString (), (gameObject.GetComponent<Transform> ().position.y + 1.0f).ToString ());
+				} else {
+					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("remcone", gameObject.GetComponent<getCollides> ().nearCone.GetComponent<NetID> ().ID.ToString ());
+				}
+			}
 
-		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_car", "Space")))) {
+			if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_car", "Space")))) {
+				listen_car = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu1", "1")))) {
+				listen_menu1 = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu2", "2")))) {
+				listen_menu2 = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu3", "3")))) {
+				listen_menu3 = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu4", "4")))) {
+				listen_menu4 = true;
+			}
+
+			if (gameObject.GetComponent<perso> ().inacar == true && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_code1", "1")))) {
+				listen_code1 = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == true && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_code2", "2")))) {
+				listen_code2 = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == true && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_code3", "3")))) {
+				listen_code3 = true;
+			}
+			if (gameObject.GetComponent<perso> ().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_interact", "E")))) {
+				listen_Interact = true;
+			}
+			if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C")))) {
+				listen_cone = true;
+			}
+		}//end of "pause" condition
+		else {
+			listen_Interact = true;
+			listen_cone = true;
+			listen_getput = true;
 			listen_car = true;
-		}
-		if (gameObject.GetComponent<perso>().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu1", "1")))) {
 			listen_menu1 = true;
-		}
-		if (gameObject.GetComponent<perso>().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu2", "2")))) {
 			listen_menu2 = true;
-		}
-		if (gameObject.GetComponent<perso>().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu3", "3")))) {
 			listen_menu3 = true;
-		}
-		if (gameObject.GetComponent<perso>().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_menu4", "4")))) {
 			listen_menu4 = true;
-		}
-
-		if (gameObject.GetComponent<perso>().inacar == true && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_code1", "1")))) {
 			listen_code1 = true;
-		}
-		if (gameObject.GetComponent<perso>().inacar == true && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_code2", "2")))) {
 			listen_code2 = true;
-		}
-		if (gameObject.GetComponent<perso>().inacar == true && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_code3", "3")))) {
 			listen_code3 = true;
 		}
-		if (gameObject.GetComponent<perso>().inacar == false && Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_interact", "E")))) {
-			listen_Interact = true;
-		}
-		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C")))) {
-			listen_cone = true;
+
+		if (listen_echap && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_echap", "Echap")))) {
+			listen_echap = false;
+			gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().TogglePause ();
 		}
 		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_echap", "Echap")))) {
 			listen_echap = true;

@@ -36,7 +36,7 @@ public class echap_menu : MonoBehaviour {
 			Application.Quit ();
 		}
 	}
-	IEnumerator SendMessage (string text = "no message", string pseudo = "no name"){
+	IEnumerator SendNTMessage (string text = "no message", string pseudo = "no name"){
 		WWWForm formMsg = new WWWForm ();
 		formMsg.AddField ("user", pseudo);
 		formMsg.AddField ("msg", text);
@@ -70,10 +70,10 @@ public class echap_menu : MonoBehaviour {
 		string presend = Chat_input.GetComponent<InputField> ().text;
 		string author = PlayerPrefs.GetString ("user_name", "Inconnu");
 		Chat_input.GetComponent<InputField> ().text = "";
-		StartCoroutine (SendMessage(presend, author));
+		StartCoroutine (SendNTMessage(presend, author));
 	}
 
 	public void DEV_respawn (){
-
+		gameObject.GetComponent<actions> ().main_character.GetComponent<Transform> ().position = new Vector3 (36.42f, -7.6f, -10.0f);
 	}
 }

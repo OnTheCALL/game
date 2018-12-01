@@ -17,7 +17,7 @@ public class VHC : MonoBehaviour {
 	public GameObject[] gyros;
 	float toggleGyro = 0.25f;
 	public int code_alerte = 1;
-	public float resetDriver = 0.0f;
+	public float resetDriver = 0.0f; 
 
 	// Use this for initialization
 	void Start () {
@@ -33,13 +33,13 @@ public class VHC : MonoBehaviour {
 		if (camOBJ != null && camOBJ.GetComponent<perso>().inacar == true) {
 			gameObject.GetComponent<Rigidbody> ().drag = 1;
 			gameObject.GetComponent<Rigidbody> ().angularDrag = 1;
-			camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x, gameObject.GetComponent<Transform> ().position.y, -10.0f);
+			//camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x, gameObject.GetComponent<Transform> ().position.y, -10.0f);
 
 			if (Imdriver) {
 				if (Input.GetKey (KeyCode.Z) && speed < -0.1f) {
-					speed = speed + 0.1f;
+					speed = speed + 0.2f;
 				} else if (Input.GetKey (KeyCode.S) && speed > 0.1f) {
-					speed = speed - 0.1f;
+					speed = speed - 0.2f;
 				} else if (Input.GetKey (KeyCode.Z)) {
 					speed = speed + Time.deltaTime;
 				} else if (Input.GetKey (KeyCode.S)) {
@@ -69,6 +69,9 @@ public class VHC : MonoBehaviour {
 				tox = -Mathf.Sin (Mathf.Deg2Rad * Direction) * speed;
 				toy = Mathf.Cos (Mathf.Deg2Rad * Direction) * speed;
 				gameObject.GetComponent<Rigidbody> ().velocity = new Vector3 (tox, toy, 0.0f);
+				float decalx = -Mathf.Sin (Mathf.Deg2Rad * Direction) * 5;
+				float decaly = Mathf.Cos (Mathf.Deg2Rad * Direction) * 5;
+				camOBJ.GetComponent<Transform> ().position = new Vector3 (gameObject.GetComponent<Transform> ().position.x + decalx, gameObject.GetComponent<Transform> ().position.y + decaly, -10.0f);
 			}
 				
 		}else {
@@ -138,7 +141,7 @@ public class VHC : MonoBehaviour {
 	public void enter (GameObject perso, GameObject skin){
 		perso.GetComponent<BoxCollider> ().enabled = false;
 		perso.GetComponent<perso> ().inacar = true;
-		perso.GetComponentInChildren<Camera> ().orthographicSize = 8.0f; 
+		perso.GetComponentInChildren<Camera> ().orthographicSize = 9.0f; 
 		camOBJ = perso;
 		Imdriver = true;
 		resetDriver = 1.0f;
@@ -147,7 +150,7 @@ public class VHC : MonoBehaviour {
 	}
 
 	public void exit (){
-		camOBJ.GetComponentInChildren<Camera> ().orthographicSize = 6.0f;
+		camOBJ.GetComponentInChildren<Camera> ().orthographicSize = 7.0f;
 		camOBJ.GetComponent<BoxCollider> ().enabled = true;
 		skintohide.GetComponent<SpriteRenderer> ().enabled = true;
 		camOBJ.GetComponent<Transform> ().position = new Vector3(spawn_door.GetComponent<Transform>().position.x, spawn_door.GetComponent<Transform>().position.y, -10.0f);
