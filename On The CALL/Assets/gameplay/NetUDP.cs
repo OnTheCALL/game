@@ -10,11 +10,15 @@ public class NetUDP : MonoBehaviour {
 	float lastTime = 0.0f;
 	float tryTime = 0.0f;
 	public GameObject[] listPlayer = new GameObject[100];
+	public float[] listPlayerUpdate = new float[100];
 
 
 	// Use this for initialization
 	void Start () {
-		
+		for(int i = 0;i<100;i++){
+			listPlayerUpdate [i] = 0.0f;
+			listPlayer [i] = null;
+		}
 	}
 	 
 	// Update is called once per frame
@@ -32,6 +36,16 @@ public class NetUDP : MonoBehaviour {
 		}
 		if (lastTime > 10.0f) {
 			gameObject.GetComponent<IG_menu> ().set_bip_hour ("OFFLINE");
+		}
+		for(int i = 0;i<100;i++){
+			if (listPlayerUpdate[i] > 0.0f) {
+				listPlayerUpdate [i] = listPlayerUpdate [i] - Time.deltaTime;
+				if (listPlayerUpdate [i] <= 0.0f) {
+					listPlayerUpdate [i] = 0.0f;
+					Destroy (listPlayer [i]);
+					listPlayer [i] = null;
+				}
+			}
 		}
 	}
 
@@ -63,8 +77,10 @@ public class NetUDP : MonoBehaviour {
 					string[] cmds2 = cmd.Split ('#');
 					if (cmds2 [0] == "fetchedpos" && int.Parse (cmds2 [1]) != playerID) {
 						if (listPlayer [int.Parse (cmds2 [1])] != null) {
+							listPlayerUpdate [int.Parse (cmds2 [1])] = 8.0f;
 							listPlayer [int.Parse (cmds2 [1])].GetComponent<Transform> ().position = new Vector3 (float.Parse (cmds2 [2]), float.Parse (cmds2 [3]), -8.0f);
 						} else {
+							listPlayerUpdate [int.Parse (cmds2 [1])] = 8.0f;
 							listPlayer [int.Parse (cmds2 [1])] = Instantiate (tryharder, new Vector3 (float.Parse (cmds2 [2]), float.Parse (cmds2 [3]), -8.0f), new Quaternion ());
 						}
 					} else if(cmds2 [0] == "VSAV 01" && int.Parse(cmds2[5]) != playerID){
