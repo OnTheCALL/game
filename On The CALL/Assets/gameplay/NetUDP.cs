@@ -83,6 +83,14 @@ public class NetUDP : MonoBehaviour {
 							listPlayerUpdate [int.Parse (cmds2 [1])] = 8.0f;
 							listPlayer [int.Parse (cmds2 [1])] = Instantiate (tryharder, new Vector3 (float.Parse (cmds2 [2]), float.Parse (cmds2 [3]), -8.0f), new Quaternion ());
 						}
+					} else if(cmds2 [0] == "INTER"){
+						if (cmds2 [1] == "NO") {
+							gameObject.GetComponent<IG_menu> ().set_bip_msg ("");
+							gameObject.GetComponent<IG_menu> ().set_bip_vhc ("");
+						} else {
+							gameObject.GetComponent<IG_menu> ().set_bip_msg (cmds2 [1]);
+							gameObject.GetComponent<IG_menu> ().set_bip_vhc (cmds2 [2]);
+						}
 					} else if(cmds2 [0] == "VSAV 01" && int.Parse(cmds2[5]) != playerID){
 						gameObject.GetComponent<actions> ().car_VSAV1.GetComponent<VHC> ().NetUpdate (int.Parse(cmds2[1]),float.Parse(cmds2[2]),float.Parse(cmds2[3]),float.Parse(cmds2[4]),int.Parse(cmds2[5]));
 					} else if(cmds2 [0] == "FPT 01" && int.Parse(cmds2[5]) != playerID){
