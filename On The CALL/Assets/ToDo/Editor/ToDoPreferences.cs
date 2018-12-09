@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class ToDoPreferences
 {
-    private static bool _prefsLoaded;
+    private static bool _prefsLoaded = false;
 
     private static bool _automaticScan;
     private static string _dataPath = "";
@@ -38,6 +38,7 @@ public class ToDoPreferences
     {
         _automaticScan = EditorPrefs.GetBool("auto_scan", true);
         _dataPath = EditorPrefs.GetString("data_path", @"Assets/ToDo/todo.asset");
+		_prefsLoaded = true;
     }
 
     private static void ApplyPreferences()

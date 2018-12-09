@@ -11,13 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33714207ad0202c419142573e6e74a38, type: 3}
   m_Name: todo
   m_EditorClassIdentifier: 
-  Entries:
-  - Text: " here\r"
-    Note: 
-    Tag: TODO
-    File: C:\Users\loulo\Code\On The CALL\unity\On The CALL\Assets\UI\VHC.cs
-    Line: 120
-    PathToShow: Assets/UI/VHC.cs(120)
+  Entries: []
   TagsList:
   - TODO
   - BUG

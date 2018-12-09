@@ -10,7 +10,7 @@ public class keyListener : MonoBehaviour {
 	private bool listen_goRight = true;*/
 	private bool listen_Interact = true;
 	private bool listen_cone = true;
-	private bool listen_getput = true;
+	//private bool listen_getput = true;
 	private bool listen_car = true;
 	private bool listen_menu1 = true;
 	private bool listen_menu2 = true;
@@ -157,6 +157,9 @@ public class keyListener : MonoBehaviour {
 				listen_Interact = false;
 				if (gameObject.GetComponent<getCollides> ().nearOrdi == true) {
 					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Ordi");
+				} else if (gameObject.GetComponent<getCollides> ().InterVictime != "") {
+					string[] tree = gameObject.GetComponent<getCollides> ().InterVictime.Split (':');
+					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().NetAction ("Inter#" + tree[0] + "#victime_menu#" + tree[1]);
 				}
 			}
 			if (listen_cone && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C"))) && gameObject.GetComponent<perso> ().inacar == false) {
@@ -203,7 +206,7 @@ public class keyListener : MonoBehaviour {
 		else {
 			listen_Interact = true;
 			listen_cone = true;
-			listen_getput = true;
+			//listen_getput = true;
 			listen_car = true;
 			listen_menu1 = true;
 			listen_menu2 = true;

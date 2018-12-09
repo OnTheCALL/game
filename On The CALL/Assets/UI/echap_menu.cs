@@ -6,7 +6,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine;
 using AOT;
 
 public class echap_menu : MonoBehaviour {
