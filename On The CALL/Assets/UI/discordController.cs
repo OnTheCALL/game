@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class DiscordJoinEvent : UnityEngine.Events.UnityEvent<string> { }
@@ -11,6 +12,8 @@ public class DiscordJoinRequestEvent : UnityEngine.Events.UnityEvent<discordRPC.
 
 public class discordController : MonoBehaviour
 {
+	public bool connected = false;
+	public string discord_ID = "";
 	public discordRPC.RichPresence presence = new discordRPC.RichPresence();
 	public string applicationId;
 	public string optionalSteamId;
@@ -31,8 +34,13 @@ public class discordController : MonoBehaviour
 	public void Update_discord()
 	{
 		presence.largeImageKey = "white1";
-		presence.state = "en astreinte";
-		presence.details = Grade;
+		if (gameObject.GetComponent<IG_menu> ().bip_text.GetComponent<Text> ().text != "") {
+			presence.details = Grade + " - " + gameObject.GetComponent<IG_menu> ().truck_text.GetComponent<Text> ().text;
+			presence.state = gameObject.GetComponent<IG_menu> ().bip_text.GetComponent<Text> ().text;
+		} else {
+			presence.state = "à la caserne";
+			presence.details = Grade + " - Disponible";
+		}
 		presence.largeImageText = "Simulateur de pompier ( https://discord.gg/u5GrRKu )";
 
 		discordRPC.UpdatePresence(presence);
@@ -55,6 +63,8 @@ public class discordController : MonoBehaviour
 	public void ReadyCallback(ref discordRPC.DiscordUser connectedUser)
 	{
 		Debug.Log(string.Format("Discord: connected to {0}#{1}: {2}", connectedUser.username, connectedUser.discriminator, connectedUser.userId));
+		connected = true;
+		discord_ID = connectedUser.userId;
 		onConnect.Invoke();
 		nextUpdate = 0.0f;
 	}

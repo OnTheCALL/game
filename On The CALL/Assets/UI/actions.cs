@@ -23,12 +23,16 @@ public class actions : MonoBehaviour {
 	}
 
 	public void DoAction (string todo){
+		string[] splitedTodo = todo.Split ('#');
 		if (todo == "open Ordi") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", "Prendre feuille route", "take departure paper");
 		} else if (todo == "take departure paper") {
-			gameObject.GetComponent<IG_menu> ().set_bip_msg ("DEPART MALAISE - CHANTIER RUE DES TILLEULS");
+			//gameObject.GetComponent<IG_menu> ().set_bip_msg ("DEPART MALAISE - CHANTIER RUE DES TILLEULS");
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+		} else if (splitedTodo[0] == "isconsciente") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("check_inconsciente", splitedTodo [1]);
 		}
 	}
 
