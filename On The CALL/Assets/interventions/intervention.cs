@@ -13,15 +13,16 @@ public class intervention : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*foreach (GameObject vhc in AVP_vhc) {
+		foreach (GameObject vhc in AVP_vhc) {
 			vhc.SetActive (false);
 		}
 		foreach (GameObject vct in victimes) {
-			vct.SetActive (false);
+			vct.GetComponent<victimes> ().reset ();
+			////////////////vct.SetActive (false);
 		}
 		foreach (GameObject inc in incendies) {
 			inc.SetActive (false);
-		}*/
+		}
 	}
 
 	// Update is called once per frame
@@ -34,6 +35,7 @@ public class intervention : MonoBehaviour {
 			vhc.SetActive (tg);
 		}
 		foreach (GameObject vct in victimes) {
+			vct.GetComponent<victimes> ().reset ();
 			vct.SetActive (tg);
 		}
 		foreach (GameObject inc in incendies) {
@@ -50,6 +52,12 @@ public class intervention : MonoBehaviour {
 		if (nbline > 1) {
 			if (datas [1] == "victime_menu") {
 				victimes [0].GetComponent<victimes> ().action ("menu");
+			}
+			else if (datas [1] == "start") {
+				toogle (true);
+			}
+			else if (datas [1] == "stop") {
+				toogle (false);
 			}
 		}
 	}

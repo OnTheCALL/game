@@ -30,9 +30,15 @@ public class actions : MonoBehaviour {
 		} else if (todo == "take departure paper") {
 			//gameObject.GetComponent<IG_menu> ().set_bip_msg ("DEPART MALAISE - CHANTIER RUE DES TILLEULS");
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
-		} else if (splitedTodo[0] == "isconsciente") {
+		} else if (splitedTodo[0] == "check_inconsciente") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<NetTCP> ().DoAction ("check_inconsciente", splitedTodo [1]);
+		} else if (splitedTodo[0] == "check_respire") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("check_respire", splitedTodo [1]);
+		} else if (splitedTodo[0] == "check_identitee") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("check_identitee", splitedTodo [1]);
 		}
 	}
 
