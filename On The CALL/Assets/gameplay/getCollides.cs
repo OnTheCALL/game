@@ -7,6 +7,7 @@ public class getCollides : MonoBehaviour {
 	public GameObject nearVhc;
 	public bool nearOrdi = false;
 	public GameObject nearCone;     //web cone obviously
+	public string InterVictime = "";
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,10 @@ public class getCollides : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public void EnterVictime(string name){
+		InterVictime = name;
 	}
 
 	void OnTriggerEnter (Collider col) {

@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Name: todo
   m_EditorClassIdentifier: 
   Entries:
-  - Text: " here\r"
+  - Text: ":  medicaments a faire\r"
     Note: 
     Tag: TODO
-    File: C:\Users\loulo\Code\On The CALL\unity\On The CALL\Assets\UI\VHC.cs
-    Line: 120
-    PathToShow: Assets/UI/VHC.cs(120)
+    File: C:\Users\loulo\Code\On The CALL\unity\On The CALL\Assets\UI\actions.cs
+    Line: 53
+    PathToShow: Assets/UI/actions.cs(53)
+  - Text: " like medicaments system, with region choose, and after type of soin\r"
+    Note: 
+    Tag: TODO
+    File: C:\Users\loulo\Code\On The CALL\unity\On The CALL\Assets\UI\actions.cs
+    Line: 57
+    PathToShow: Assets/UI/actions.cs(57)
   TagsList:
   - TODO
   - BUG

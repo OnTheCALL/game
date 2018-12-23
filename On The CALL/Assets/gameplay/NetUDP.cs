@@ -10,11 +10,15 @@ public class NetUDP : MonoBehaviour {
 	float lastTime = 0.0f;
 	float tryTime = 0.0f;
 	public GameObject[] listPlayer = new GameObject[100];
+	public float[] listPlayerUpdate = new float[100];
 
 
 	// Use this for initialization
 	void Start () {
-		
+		for(int i = 0;i<100;i++){
+			listPlayerUpdate [i] = 0.0f;
+			listPlayer [i] = null;
+		}
 	}
 	 
 	// Update is called once per frame
@@ -32,6 +36,16 @@ public class NetUDP : MonoBehaviour {
 		}
 		if (lastTime > 10.0f) {
 			gameObject.GetComponent<IG_menu> ().set_bip_hour ("OFFLINE");
+		}
+		for(int i = 0;i<100;i++){
+			if (listPlayerUpdate[i] > 0.0f) {
+				listPlayerUpdate [i] = listPlayerUpdate [i] - Time.deltaTime;
+				if (listPlayerUpdate [i] <= 0.0f) {
+					listPlayerUpdate [i] = 0.0f;
+					Destroy (listPlayer [i]);
+					listPlayer [i] = null;
+				}
+			}
 		}
 	}
 
@@ -63,14 +77,28 @@ public class NetUDP : MonoBehaviour {
 					string[] cmds2 = cmd.Split ('#');
 					if (cmds2 [0] == "fetchedpos" && int.Parse (cmds2 [1]) != playerID) {
 						if (listPlayer [int.Parse (cmds2 [1])] != null) {
+							listPlayerUpdate [int.Parse (cmds2 [1])] = 8.0f;
 							listPlayer [int.Parse (cmds2 [1])].GetComponent<Transform> ().position = new Vector3 (float.Parse (cmds2 [2]), float.Parse (cmds2 [3]), -8.0f);
 						} else {
+							listPlayerUpdate [int.Parse (cmds2 [1])] = 8.0f;
 							listPlayer [int.Parse (cmds2 [1])] = Instantiate (tryharder, new Vector3 (float.Parse (cmds2 [2]), float.Parse (cmds2 [3]), -8.0f), new Quaternion ());
+						}
+					} else if(cmds2 [0] == "INTER"){
+						if (cmds2 [1] == "NO") {
+							gameObject.GetComponent<IG_menu> ().set_bip_msg ("");
+							gameObject.GetComponent<IG_menu> ().set_bip_vhc ("");
+						} else {
+							gameObject.GetComponent<IG_menu> ().set_bip_msg (cmds2 [1]);
+							gameObject.GetComponent<IG_menu> ().set_bip_vhc (cmds2 [2]);
 						}
 					} else if(cmds2 [0] == "VSAV 01" && int.Parse(cmds2[5]) != playerID){
 						gameObject.GetComponent<actions> ().car_VSAV1.GetComponent<VHC> ().NetUpdate (int.Parse(cmds2[1]),float.Parse(cmds2[2]),float.Parse(cmds2[3]),float.Parse(cmds2[4]),int.Parse(cmds2[5]));
 					} else if(cmds2 [0] == "FPT 01" && int.Parse(cmds2[5]) != playerID){
 						gameObject.GetComponent<actions> ().car_FPT1.GetComponent<VHC> ().NetUpdate (int.Parse(cmds2[1]),float.Parse(cmds2[2]),float.Parse(cmds2[3]),float.Parse(cmds2[4]),int.Parse(cmds2[5]));
+					}
+					else if(cmds2 [0] == "VICTIME"){
+						gameObject.GetComponent<actions> ().RelayToInter (cmds2 [1]);
+						gameObject.GetComponent<actions> ().NetAction ("Inter#" + cmds2[1] + "#VICTIME#" + cmds2[2] + "#" + cmds2[3] + "#" + cmds2[4] + "#" + cmds2[5] + "#" + cmds2[6]);
 					}
 				}
 				//gameObject.GetComponent<fromNetwork> ().sendUDPString ("setmypos#4#{{" + playerID + "}}+{{" + skinTryer.GetComponent<Transform> ().position.x.ToString () + "}}+{{" + skinTryer.GetComponent<Transform> ().position.y.ToString () + "}}+{{0}}");
