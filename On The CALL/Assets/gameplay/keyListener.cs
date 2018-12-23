@@ -21,6 +21,7 @@ public class keyListener : MonoBehaviour {
 	private bool listen_code2 = true;
 	private bool listen_code3 = true;
 	private bool listen_echap = true;
+	private bool listen_backspace = true;
 
 	public KeyCode convertKey (string name){
 		if (name == "A") { return KeyCode.A; }
@@ -55,6 +56,7 @@ public class keyListener : MonoBehaviour {
 		else if (name == "Right Ctrl") { return KeyCode.RightControl; }
 		else if (name == "Space") { return KeyCode.Space; }
 		else if (name == "Echap") { return KeyCode.Escape; }
+		else if (name == "Backspace") { return KeyCode.Backspace; }
 		else if (name == "0") { return KeyCode.Alpha0; }
 		else if (name == "1") { return KeyCode.Alpha1; }
 		else if (name == "2") { return KeyCode.Alpha2; }
@@ -89,6 +91,7 @@ public class keyListener : MonoBehaviour {
 			PlayerPrefs.SetString ("keyboard_menu3", "3");
 			PlayerPrefs.SetString ("keyboard_menu4", "4");
 			PlayerPrefs.SetString ("keyboard_echap", "Echap");
+			PlayerPrefs.SetString ("keyboard_retour", "Backspace");
 			PlayerPrefs.SetInt ("AlreadySet", 1);
 			PlayerPrefs.Save ();
 		}
@@ -158,12 +161,18 @@ public class keyListener : MonoBehaviour {
 				listen_Interact = false;
 				if (gameObject.GetComponent<getCollides> ().nearOrdi == true) {
 					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Ordi");
+				} else if (gameObject.GetComponent<getCollides> ().nearHospital == true) {
+					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Hospital Menu");
 				} else if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
 					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().menuE ();
 				} else if (gameObject.GetComponent<getCollides> ().InterVictime != "") {
 					string[] tree = gameObject.GetComponent<getCollides> ().InterVictime.Split (':');
 					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().NetAction ("Inter#" + tree[0] + "#victime_menu#" + tree[1]);
 				}
+			}
+			if (listen_backspace && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_retour", "Backspace")))) {
+				listen_backspace = false;
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().CloseMenu ();
 			}
 			if (listen_cone && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C"))) && gameObject.GetComponent<perso> ().inacar == false) {
 				listen_cone = false;
@@ -205,6 +214,9 @@ public class keyListener : MonoBehaviour {
 			if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C")))) {
 				listen_cone = true;
 			}
+			if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_retour", "Backspace")))) {
+				listen_backspace = true;
+			}
 		}//end of "pause" condition
 		else {
 			listen_Interact = true;
@@ -218,6 +230,7 @@ public class keyListener : MonoBehaviour {
 			listen_code1 = true;
 			listen_code2 = true;
 			listen_code3 = true;
+			listen_backspace = true;
 		}
 
 		if (listen_echap && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_echap", "Echap")))) {

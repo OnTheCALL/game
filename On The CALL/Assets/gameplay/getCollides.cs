@@ -6,6 +6,7 @@ public class getCollides : MonoBehaviour {
 
 	public GameObject nearVhc;
 	public bool nearOrdi = false;
+	public bool nearHospital = false;
 	public GameObject nearCone;     //web cone obviously
 	public string InterVictime = "";
 
@@ -30,6 +31,8 @@ public class getCollides : MonoBehaviour {
 			nearCone = col.gameObject;
 		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
 			nearOrdi = true;
+		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Hopital_Deposit") {
+			nearHospital = true;
 		}
 	}
 
@@ -40,6 +43,8 @@ public class getCollides : MonoBehaviour {
 			nearCone = col.gameObject;
 		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
 			nearOrdi = true;
+		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Hopital_Deposit") {
+			nearHospital = true;
 		}
 	}
 
@@ -50,6 +55,8 @@ public class getCollides : MonoBehaviour {
 			nearCone = null;
 		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Ordinateur") {
 			nearOrdi = false;
+		} else if (col.gameObject.GetComponent<EventNamer> () != null && col.gameObject.GetComponent<EventNamer> ().eventname == "Hopital_Deposit") {
+			nearHospital = false;
 		}
 	}
 }

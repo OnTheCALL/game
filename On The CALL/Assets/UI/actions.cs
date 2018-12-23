@@ -27,6 +27,9 @@ public class actions : MonoBehaviour {
 		if (todo == "open Ordi") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", "Prendre feuille route", "take departure paper");
+		} else if (todo == "open Hospital Menu"){
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<IG_menu> ().OpenMenu ("CHU St-Brieuc", "Déposer une victime", "medic_deposer_brancard_hopital#" + gameObject.GetComponent<fromNetwork>().ID.ToString());
 		} else if (todo == "take departure paper") {
 			//gameObject.GetComponent<IG_menu> ().set_bip_msg ("DEPART MALAISE - CHANTIER RUE DES TILLEULS");
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
@@ -61,6 +64,13 @@ public class actions : MonoBehaviour {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<NetTCP> ().DoAction ("medic_rentrer_brancard_dans", splitedTodo [1], splitedTodo [2]);
 			gameObject.GetComponent<IG_menu> ().change_tool ("hand");
+		} else if (splitedTodo[0] == "medic_prendre_brancard_avec_victime") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_prendre_brancard_avec_victime", splitedTodo [1], splitedTodo [2]);
+			gameObject.GetComponent<IG_menu> ().change_tool ("brancard");
+		} else if (splitedTodo[0] == "medic_deposer_brancard_hopital") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_deposer_brancard_hopital", splitedTodo [1]);
 		} else if (splitedTodo[0] == "taketool") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<IG_menu> ().change_tool (splitedTodo [1]);
