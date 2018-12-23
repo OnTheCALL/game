@@ -17,7 +17,8 @@ public class VHC : MonoBehaviour {
 	public GameObject[] gyros;
 	float toggleGyro = 0.25f;
 	public int code_alerte = 1;
-	public float resetDriver = 0.0f; 
+	public float resetDriver = 0.0f;
+	public GameObject World;
 
 	// Use this for initialization
 	void Start () {
@@ -158,5 +159,13 @@ public class VHC : MonoBehaviour {
 		camOBJ = null;
 		Imdriver = false;
 		skintohide = null;
+	}
+
+	public void menuE (){
+		if (VHCname == "VSAV 01" && World.GetComponent<IG_menu>().get_tool() == "brancard") {
+			World.GetComponent<IG_menu>().OpenMenu("Brancard", "Attacher Brancard", "medic_rentrer_brancard_dans#VSAV 01#" + World.GetComponent<fromNetwork>().ID.ToString());
+		} else if (VHCname == "VSAV 01") {
+			World.GetComponent<IG_menu>().OpenMenu("Equipement", "Gants Latex", "taketool#hand", "Sac de secours", "taketool#medpack", "Brancard", "taketool#brancard");
+		}
 	}
 }

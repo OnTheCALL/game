@@ -18,6 +18,8 @@ public class IG_menu : MonoBehaviour {
 	public GameObject chat_text_1;
 	public GameObject chat_text_2;
 	public GameObject chat_inter;
+	public GameObject in_hand;
+	public Sprite[] items;
 
 	// Use this for initialization
 	void Start () {
@@ -91,5 +93,25 @@ public class IG_menu : MonoBehaviour {
 	}
 	public void msg_inter(string text){
 		chat_inter.GetComponent<Text>().text = text;
+	}
+
+	public void change_tool(string text){
+		if (text == "hand") {
+			in_hand.GetComponent<Image> ().sprite = items [0];
+		} else if(text == "medpack"){
+			in_hand.GetComponent<Image> ().sprite = items [1];
+		} else if(text == "brancard"){
+			in_hand.GetComponent<Image> ().sprite = items [2];
+		}
+	}
+
+	public string get_tool(){
+		if (in_hand.GetComponent<Image> ().sprite == items [1]) {
+			return "medpack";
+		} else if (in_hand.GetComponent<Image> ().sprite == items [2]) {
+			return "brancard";
+		} else {
+			return "hand";
+		}
 	}
 }

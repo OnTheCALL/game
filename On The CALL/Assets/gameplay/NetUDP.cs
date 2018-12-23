@@ -96,6 +96,10 @@ public class NetUDP : MonoBehaviour {
 					} else if(cmds2 [0] == "FPT 01" && int.Parse(cmds2[5]) != playerID){
 						gameObject.GetComponent<actions> ().car_FPT1.GetComponent<VHC> ().NetUpdate (int.Parse(cmds2[1]),float.Parse(cmds2[2]),float.Parse(cmds2[3]),float.Parse(cmds2[4]),int.Parse(cmds2[5]));
 					}
+					else if(cmds2 [0] == "VICTIME"){
+						gameObject.GetComponent<actions> ().RelayToInter (cmds2 [1]);
+						gameObject.GetComponent<actions> ().NetAction ("Inter#" + cmds2[1] + "#VICTIME#" + cmds2[2] + "#" + cmds2[3] + "#" + cmds2[4] + "#" + cmds2[5] + "#" + cmds2[6]);
+					}
 				}
 				//gameObject.GetComponent<fromNetwork> ().sendUDPString ("setmypos#4#{{" + playerID + "}}+{{" + skinTryer.GetComponent<Transform> ().position.x.ToString () + "}}+{{" + skinTryer.GetComponent<Transform> ().position.y.ToString () + "}}+{{0}}");
 				if (gameObject.GetComponent<actions> ().main_character.GetComponent<perso> ().inacar == true) {

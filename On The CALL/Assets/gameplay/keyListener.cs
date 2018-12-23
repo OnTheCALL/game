@@ -158,6 +158,8 @@ public class keyListener : MonoBehaviour {
 				listen_Interact = false;
 				if (gameObject.GetComponent<getCollides> ().nearOrdi == true) {
 					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().DoAction ("open Ordi");
+				} else if (gameObject.GetComponent<getCollides> ().nearVhc != null) {
+					gameObject.GetComponent<getCollides> ().nearVhc.GetComponent<VHC> ().menuE ();
 				} else if (gameObject.GetComponent<getCollides> ().InterVictime != "") {
 					string[] tree = gameObject.GetComponent<getCollides> ().InterVictime.Split (':');
 					gameObject.GetComponent<perso> ().World.GetComponent<actions> ().NetAction ("Inter#" + tree[0] + "#victime_menu#" + tree[1]);

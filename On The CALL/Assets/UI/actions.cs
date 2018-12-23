@@ -39,6 +39,31 @@ public class actions : MonoBehaviour {
 		} else if (splitedTodo[0] == "check_identitee") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<NetTCP> ().DoAction ("check_identitee", splitedTodo [1]);
+		} else if (splitedTodo[0] == "search_hurt_zone") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("search_hurt_zone", splitedTodo [1]);
+		} else if (splitedTodo[0] == "medic_put_collier_cervical") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_put_collier_cervical", splitedTodo [1]);
+		} else if (splitedTodo[0] == "medic_rcp") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_rcp", splitedTodo [1]);
+		} else if (splitedTodo[0] == "medic_asistance_resp") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_asistance_resp", splitedTodo [1]);
+		} else if (splitedTodo[0] == "medic_menu_blessures") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			//TODO region choose, and after type of soin
+		} else if (splitedTodo[0] == "medic_put_victim_in_brancard") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_put_victim_in_brancard", splitedTodo [1], splitedTodo [2]);
+		} else if (splitedTodo[0] == "medic_rentrer_brancard_dans") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_rentrer_brancard_dans", splitedTodo [1], splitedTodo [2]);
+			gameObject.GetComponent<IG_menu> ().change_tool ("hand");
+		} else if (splitedTodo[0] == "taketool") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<IG_menu> ().change_tool (splitedTodo [1]);
 		}
 	}
 
@@ -67,6 +92,16 @@ public class actions : MonoBehaviour {
 				}
 			} else {
 				//unknow action
+			}
+		}
+	}
+
+	public void RelayToInter(string TAG){ 
+		foreach (GameObject inter in interventions) {
+			if (inter.GetComponent<intervention> ().NAME == TAG && inter.GetComponent<intervention> ().spawned == false) {
+				inter.GetComponent<intervention> ().Action ("fromServer#start");
+			} else if(inter.GetComponent<intervention> ().NAME != TAG && inter.GetComponent<intervention> ().spawned == true){
+				inter.GetComponent<intervention> ().Action ("fromServer#stop");
 			}
 		}
 	}

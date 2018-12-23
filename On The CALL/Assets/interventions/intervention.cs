@@ -13,12 +13,13 @@ public class intervention : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		spawned = false;
 		foreach (GameObject vhc in AVP_vhc) {
 			vhc.SetActive (false);
 		}
 		foreach (GameObject vct in victimes) {
 			vct.GetComponent<victimes> ().reset ();
-			////////////////vct.SetActive (false);
+			vct.SetActive (false);
 		}
 		foreach (GameObject inc in incendies) {
 			inc.SetActive (false);
@@ -31,6 +32,7 @@ public class intervention : MonoBehaviour {
 	}
 
 	public void toogle (bool tg){
+		spawned = tg;
 		foreach (GameObject vhc in AVP_vhc) {
 			vhc.SetActive (tg);
 		}
@@ -50,8 +52,11 @@ public class intervention : MonoBehaviour {
 			nbline = nbline + 1;
 		}
 		if (nbline > 1) {
-			if (datas [1] == "victime_menu") {
-				victimes [0].GetComponent<victimes> ().action ("menu");
+			if (datas [1] == "victime_menu" && nbline > 2) {
+				victimes [ int.Parse(datas[2]) ].GetComponent<victimes> ().action ("menu");
+			}
+			else if (datas [1] == "VICTIME" && nbline > 2) {
+				victimes [ int.Parse(datas[2]) ].GetComponent<victimes> ().update (float.Parse(datas[3]), float.Parse(datas[4]), float.Parse(datas[5]), float.Parse(datas[6]));
 			}
 			else if (datas [1] == "start") {
 				toogle (true);
