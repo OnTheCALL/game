@@ -165,7 +165,7 @@ public class VHC : MonoBehaviour {
 		if (VHCname == "VSAV 01" && World.GetComponent<IG_menu>().get_tool() == "brancard") {
 			World.GetComponent<IG_menu>().OpenMenu("Brancard", "Attacher Brancard", "medic_rentrer_brancard_dans#VSAV 01#" + World.GetComponent<fromNetwork>().ID.ToString());
 		} else if (VHCname == "VSAV 01") {
-			World.GetComponent<IG_menu>().OpenMenu("Equipement", "Gants Latex", "taketool#hand", "Sac de secours", "taketool#medpack", "Brancard", "taketool#brancard");
+			World.GetComponent<IG_menu>().OpenMenu("Equipement", "Gants Latex", "taketool#hand", "Sac de secours", "taketool#medpack", "Brancard", "taketool#brancard", "Reprendre la victime", "medic_prendre_brancard_avec_victime#VSAV 01#" + World.GetComponent<fromNetwork>().ID.ToString());
 		}
 	}
 }
