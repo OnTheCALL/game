@@ -100,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910859984382450}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 51.71, y: -6.63, z: -3}
+  m_LocalPosition: {x: 47.7, y: -6.63, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4505336242145296}
@@ -280,12 +280,16 @@ MonoBehaviour:
   Imdriver: 0
   VHCname: VSAV 01
   Direction: 180
-  maxspeed: 10
+  maxspeed: 12
   spawn_door: {fileID: 1207012371308538}
   gyros:
   - {fileID: 1761248092170020}
   - {fileID: 1688606940864274}
+  gyrosecondaires: []
+  gyro_secondaire_mode: 0
   code_alerte: 1
+  resetDriver: 0
+  World: {fileID: 0}
 --- !u!212 &212105136490050468
 SpriteRenderer:
   m_ObjectHideFlags: 1

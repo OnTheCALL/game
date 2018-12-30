@@ -43,7 +43,7 @@ public class fromNetwork : MonoBehaviour {
 		yield return downloadFM;
 		if (string.IsNullOrEmpty (downloadFM.error)) {
 			monObjFM = JSON.Parse(downloadFM.text);
-			gameObject.GetComponent<NetTCP> ().receive (monObjFM ["chat"], monObjFM ["chat_inter"], monObjFM ["act1"], monObjFM ["act2"], monObjFM ["act3"], monObjFM ["act4"], monObjFM ["act5"]);
+			gameObject.GetComponent<NetTCP> ().receive (monObjFM ["chat"], monObjFM ["chat_inter"], monObjFM ["cones"], monObjFM ["inter_info"]);
 		}
 		sendOnNext = true;
 	}

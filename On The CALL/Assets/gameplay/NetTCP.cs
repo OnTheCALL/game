@@ -41,17 +41,21 @@ public class NetTCP : MonoBehaviour {
 		StartCoroutine (makeAweb(act, d1, d2, d3));
 	}
 
-	public void receive(string chat, string chat_inter, string act1 = " ", string act2 = " ", string act3 = " ", string act4 = " ", string act5 = " "){
+	public void receive(string chat, string chat_inter, string cones = " ", string inter_info = " "){
 		gameObject.GetComponent<IG_menu> ().update_chat(chat);
+		gameObject.GetComponent<OBJ_manger> ().updateCones (cones);
 		if (gameObject.GetComponent<IG_menu> ().truck_text.GetComponent<Text> ().text == "") {
 			gameObject.GetComponent<IG_menu> ().msg_inter ("");
 		} else {
 			gameObject.GetComponent<IG_menu> ().msg_inter (chat_inter);
 		}
-		if(act1 != " ") gameObject.GetComponent<actions> ().NetAction (act1);
-		if(act2 != " ") gameObject.GetComponent<actions> ().NetAction (act2);
-		if(act3 != " ") gameObject.GetComponent<actions> ().NetAction (act3);
-		if(act4 != " ") gameObject.GetComponent<actions> ().NetAction (act4);
-		if(act5 != " ") gameObject.GetComponent<actions> ().NetAction (act5);
+			
+		string[] inter_data = inter_info.Split ('&');
+		foreach (string inter in inter_data) {
+			string[] parsed = inter.Split ('#');
+			if (parsed [0] == "Victim_blessure") {
+				gameObject.GetComponent<actions> ().NetAction ("Inter#" + parsed[1] + "#Victim_blessure#" + parsed[2] + "#" +  parsed[3]);
+			}
+		}
 	}
 }
