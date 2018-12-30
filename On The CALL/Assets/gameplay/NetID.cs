@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NetID : MonoBehaviour {
 
-	public int ID = 0;
+	//public int ID = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -16,11 +16,11 @@ public class NetID : MonoBehaviour {
 		
 	}
 
-	public void deleteMyself(){
+	/*public void deleteMyself(){
 		Destroy (gameObject);
 	}
 
 	public void setVHCcode(int code){
 		gameObject.GetComponent<VHC>().change_code(code, true);
-	}
+	}*/
 }

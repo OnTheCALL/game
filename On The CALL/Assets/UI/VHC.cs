@@ -16,6 +16,8 @@ public class VHC : MonoBehaviour {
 	public GameObject spawn_door;
 	public GameObject[] gyros;
 	float toggleGyro = 0.25f;
+	public GameObject[] gyrosecondaires;
+	public int gyro_secondaire_mode = 0;
 	public int code_alerte = 1;
 	public float resetDriver = 0.0f;
 	public GameObject World;
@@ -41,9 +43,9 @@ public class VHC : MonoBehaviour {
 					speed = speed + 0.2f;
 				} else if (Input.GetKey (KeyCode.S) && speed > 0.1f) {
 					speed = speed - 0.2f;
-				} else if (Input.GetKey (KeyCode.Z)) {
+				} else if (Input.GetKey (KeyCode.Z) && speed < maxspeed) {
 					speed = speed + Time.deltaTime;
-				} else if (Input.GetKey (KeyCode.S)) {
+				} else if (Input.GetKey (KeyCode.S) && speed > (0 - maxspeed)) {
 					speed = speed - Time.deltaTime;
 				} else if (speed > 0.05f) {
 					speed = speed - 0.05f;
@@ -92,6 +94,9 @@ public class VHC : MonoBehaviour {
 		if (code_alerte < 3 && gameObject.GetComponent<AudioSource> ().isPlaying == true) {
 			gameObject.GetComponent<AudioSource> ().Stop ();
 		}
+		foreach (GameObject led in gyrosecondaires) {
+			led.GetComponent<LED_model> ().send (Time.time, gyro_secondaire_mode);
+		}
 	}
 
 	public void change_code(int code, bool force){
@@ -127,12 +132,13 @@ public class VHC : MonoBehaviour {
 		}
 	}
 
-	public void NetUpdate(int code, float x, float y, float zaxis, int driverID){
+	public void NetUpdate(int code, int gyro2, float x, float y, float zaxis, int driverID){
 		// this is not called if you are the driver
 		Imdriver = false;
 		if (code_alerte != code) {
 			change_code (code, true);
 		}
+		gyro_secondaire_mode = gyro2;
 		//Vector3 oldpos = gameObject.GetComponent<Transform> ().position;
 		gameObject.GetComponent<Transform> ().position = new Vector3 (x, y, -3.0f);
 		//gameObject.GetComponent<Transform> ().LookAt (oldpos);
@@ -166,6 +172,10 @@ public class VHC : MonoBehaviour {
 			World.GetComponent<IG_menu>().OpenMenu("Brancard", "Attacher Brancard", "medic_rentrer_brancard_dans#VSAV 01#" + World.GetComponent<fromNetwork>().ID.ToString());
 		} else if (VHCname == "VSAV 01") {
 			World.GetComponent<IG_menu>().OpenMenu("Equipement", "Gants Latex", "taketool#hand", "Sac de secours", "taketool#medpack", "Brancard", "taketool#brancard", "Reprendre la victime", "medic_prendre_brancard_avec_victime#VSAV 01#" + World.GetComponent<fromNetwork>().ID.ToString());
+		} else if (VHCname == "FPTSR 01" && gyro_secondaire_mode == 1) {
+			World.GetComponent<IG_menu>().OpenMenu("FPTSR", "Eteindre TriFlash", "setGyro2model#FPTSR 01#0");
+		} else if (VHCname == "FPTSR 01" && gyro_secondaire_mode == 0) {
+			World.GetComponent<IG_menu>().OpenMenu("FPTSR", "Allumer TriFlash", "setGyro2model#FPTSR 01#1");
 		}
 	}
 }

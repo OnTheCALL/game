@@ -55,6 +55,12 @@ public class intervention : MonoBehaviour {
 			if (datas [1] == "victime_menu" && nbline > 2) {
 				victimes [ int.Parse(datas[2]) ].GetComponent<victimes> ().action ("menu");
 			}
+			else if (datas [1] == "menu_blessure" && nbline > 2) {
+				victimes [ int.Parse(datas[2]) ].GetComponent<victimes> ().action ("menu_blessure");
+			}
+			else if (datas [1] == "Victim_blessure" && nbline > 3) {
+				victimes [ int.Parse(datas[2]) ].GetComponent<victimes> ().updateBlessures (datas[3]);
+			}
 			else if (datas [1] == "VICTIME" && nbline > 2) {
 				victimes [ int.Parse(datas[2]) ].GetComponent<victimes> ().update (float.Parse(datas[3]), float.Parse(datas[4]), float.Parse(datas[5]), float.Parse(datas[6]));
 			}

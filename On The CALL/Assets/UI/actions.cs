@@ -10,6 +10,9 @@ public class actions : MonoBehaviour {
 	public GameObject cone_model;
 	public GameObject car_VSAV1;
 	public GameObject car_FPT1;
+	public GameObject car_FPTSR1;
+	public GameObject car_VL1;
+	public GameObject car_SAMU_VL1;
 	public GameObject[] interventions;
 
 	// Use this for initialization
@@ -27,6 +30,8 @@ public class actions : MonoBehaviour {
 		if (todo == "open Ordi") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<IG_menu> ().OpenMenu ("Ordinateur", "Prendre feuille route", "take departure paper");
+		} else if (todo == "close"){
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 		} else if (todo == "open Hospital Menu"){
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<IG_menu> ().OpenMenu ("CHU St-Brieuc", "Déposer une victime", "medic_deposer_brancard_hopital#" + gameObject.GetComponent<fromNetwork>().ID.ToString());
@@ -56,7 +61,23 @@ public class actions : MonoBehaviour {
 			gameObject.GetComponent<NetTCP> ().DoAction ("medic_asistance_resp", splitedTodo [1]);
 		} else if (splitedTodo[0] == "medic_menu_blessures") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
-			//TODO region choose, and after type of soin
+			string[] Tags = splitedTodo[1].Split(':');
+			NetAction("Inter#" + Tags[0] + "#menu_blessure#" + Tags[1]);
+		} else if (splitedTodo[0] == "medic_menu_blessures2") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<IG_menu> ().OpenMenu (splitedTodo[2], "Désinfecter", "medic_soins_desinfecter#" + splitedTodo[1] + "#" + splitedTodo[2], "Mettre bandage", "medic_soins_bandage#" + splitedTodo[1] + "#" + splitedTodo[2], "Mettre crème anti-douleur", "medic_soins_antidouleur#" + splitedTodo[1] + "#" + splitedTodo[2], "Mettre pansement", "medic_soins_pansement#" + splitedTodo[1] + "#" + splitedTodo[2]);
+		} else if (splitedTodo[0] == "medic_soins_desinfecter") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_soins_desinfecter", splitedTodo [1], splitedTodo [2]);
+		} else if (splitedTodo[0] == "medic_soins_bandage") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_soins_bandage", splitedTodo [1], splitedTodo [2]);
+		} else if (splitedTodo[0] == "medic_soins_antidouleur") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_soins_antidouleur", splitedTodo [1], splitedTodo [2]);
+		} else if (splitedTodo[0] == "medic_soins_pansement") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("medic_soins_pansement", splitedTodo [1], splitedTodo [2]);
 		} else if (splitedTodo[0] == "medic_put_victim_in_brancard") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<NetTCP> ().DoAction ("medic_put_victim_in_brancard", splitedTodo [1], splitedTodo [2]);
@@ -74,6 +95,9 @@ public class actions : MonoBehaviour {
 		} else if (splitedTodo[0] == "taketool") {
 			gameObject.GetComponent<IG_menu> ().CloseMenu ();
 			gameObject.GetComponent<IG_menu> ().change_tool (splitedTodo [1]);
+		} else if (splitedTodo[0] == "setGyro2model") {
+			gameObject.GetComponent<IG_menu> ().CloseMenu ();
+			gameObject.GetComponent<NetTCP> ().DoAction ("setGyro2model", splitedTodo [1], splitedTodo [2]);
 		}
 	}
 
@@ -84,12 +108,7 @@ public class actions : MonoBehaviour {
 			nbline = nbline + 1;
 		}
 		if (nbline > 0) {
-			if (datas [0] == "addcone" && nbline > 3) {
-				GameObject temp = Instantiate (cone_model, new Vector3 (float.Parse (datas [2]), float.Parse (datas [3]), -2.0f), new Quaternion (0, 0, 0, 0));
-				temp.GetComponent<NetID> ().ID = int.Parse (datas [1]);
-			} else if (datas [0] == "remcone" && nbline > 1) {
-				eventmanager.GetComponent<IDsenpai> ().actionTo (int.Parse (datas [1]), "destroy");
-			} else if(datas[0] == "Inter" && nbline > 2) {
+			if(datas[0] == "Inter" && nbline > 2) {
 				foreach (GameObject inter in interventions) {
 					if (inter.GetComponent<intervention> ().NAME == datas [1]) {
 						string preparestring = "fromServer";
@@ -100,6 +119,7 @@ public class actions : MonoBehaviour {
 						return;
 					}
 				}
+				Debug.Log ("inter not find  :  " + rawaction);
 			} else {
 				//unknow action
 			}

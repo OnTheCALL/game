@@ -176,11 +176,7 @@ public class keyListener : MonoBehaviour {
 			}
 			if (listen_cone && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_cone", "C"))) && gameObject.GetComponent<perso> ().inacar == false) {
 				listen_cone = false;
-				if (gameObject.GetComponent<getCollides> ().nearCone == null) {
-					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("addcone", gameObject.GetComponent<Transform> ().position.x.ToString (), (gameObject.GetComponent<Transform> ().position.y + 1.0f).ToString ());
-				} else {
-					gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("remcone", gameObject.GetComponent<getCollides> ().nearCone.GetComponent<NetID> ().ID.ToString ());
-				}
+				gameObject.GetComponent<perso> ().World.GetComponent<NetTCP> ().DoAction ("keycone", gameObject.GetComponent<Transform> ().position.x.ToString (), (gameObject.GetComponent<Transform> ().position.y).ToString ());
 			}
 
 			if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_car", "Space")))) {
