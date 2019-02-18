@@ -17,11 +17,13 @@ public class keyListener : MonoBehaviour {
 	private bool listen_menu2 = true;
 	private bool listen_menu3 = true;
 	private bool listen_menu4 = true;
+	private bool listen_y = true;
 	private bool listen_code1 = true;
 	private bool listen_code2 = true;
 	private bool listen_code3 = true;
 	private bool listen_echap = true;
 	private bool listen_backspace = true;
+	private bool listen_enter = true;
 
 	public KeyCode convertKey (string name){
 		if (name == "A") { return KeyCode.A; }
@@ -57,6 +59,7 @@ public class keyListener : MonoBehaviour {
 		else if (name == "Space") { return KeyCode.Space; }
 		else if (name == "Echap") { return KeyCode.Escape; }
 		else if (name == "Backspace") { return KeyCode.Backspace; }
+		else if (name == "Enter") { return KeyCode.Return ; }
 		else if (name == "0") { return KeyCode.Alpha0; }
 		else if (name == "1") { return KeyCode.Alpha1; }
 		else if (name == "2") { return KeyCode.Alpha2; }
@@ -82,6 +85,7 @@ public class keyListener : MonoBehaviour {
 			PlayerPrefs.SetString ("keyboard_car", "Space");
 			PlayerPrefs.SetString ("keyboard_walk", "Left Shift");
 			PlayerPrefs.SetString ("keyboard_interact", "E");
+			PlayerPrefs.SetString ("keyboard_speak_victime", "Y");
 			PlayerPrefs.SetString ("keyboard_cone", "C");
 			PlayerPrefs.SetString ("keyboard_code1", "1");
 			PlayerPrefs.SetString ("keyboard_code2", "2");
@@ -92,6 +96,7 @@ public class keyListener : MonoBehaviour {
 			PlayerPrefs.SetString ("keyboard_menu4", "4");
 			PlayerPrefs.SetString ("keyboard_echap", "Echap");
 			PlayerPrefs.SetString ("keyboard_retour", "Backspace");
+			PlayerPrefs.SetString ("keyboard_entrer", "Enter");
 			PlayerPrefs.SetInt ("AlreadySet", 1);
 			PlayerPrefs.Save ();
 		}
@@ -99,7 +104,7 @@ public class keyListener : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().OnPause == false) {
+		if (gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().OnPause == false && gameObject.GetComponent<perso>().World.GetComponent<IG_menu>().speak_to_vic.activeSelf == false) {
 			gameObject.GetComponent<perso> ().goUp = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goUp", "Z"))) && gameObject.GetComponent<perso> ().inacar == false;
 			gameObject.GetComponent<perso> ().goDown = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goDown", "S"))) && gameObject.GetComponent<perso> ().inacar == false;
 			gameObject.GetComponent<perso> ().goLeft = Input.GetKey (convertKey (PlayerPrefs.GetString ("keyboard_goLeft", "Q"))) && gameObject.GetComponent<perso> ().inacar == false;
@@ -231,10 +236,32 @@ public class keyListener : MonoBehaviour {
 
 		if (listen_echap && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_echap", "Echap")))) {
 			listen_echap = false;
-			gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().TogglePause ();
+			if (gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().OnPause == true) {
+				gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().TogglePause ();
+			} else if(gameObject.GetComponent<perso>().World.GetComponent<IG_menu>().speak_to_vic.activeSelf == true){
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().pressEsc ();
+			}
 		}
 		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_echap", "Echap")))) {
 			listen_echap = true;
+		}
+
+		if (listen_y && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_speak_victime", "Y"))) && gameObject.GetComponent<perso> ().World.GetComponent<echap_menu> ().OnPause == false) {
+			listen_y = false;
+			gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().pressY ();
+		}
+		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_speak_victime", "Y")))) {
+			listen_y = true;
+		}
+
+		if (listen_enter && Input.GetKeyDown (convertKey (PlayerPrefs.GetString ("keyboard_entrer", "Enter")))) {
+			listen_enter = false;
+			if(gameObject.GetComponent<perso>().World.GetComponent<IG_menu>().speak_to_vic.activeSelf == true){
+				gameObject.GetComponent<perso> ().World.GetComponent<IG_menu> ().pressEnter ();
+			}
+		}
+		if (Input.GetKeyUp (convertKey (PlayerPrefs.GetString ("keyboard_entrer", "Enter")))) {
+			listen_enter = true;
 		}
 	}
 }

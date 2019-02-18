@@ -18,6 +18,7 @@ public class IG_menu : MonoBehaviour {
 	public GameObject chat_text_1;
 	public GameObject chat_text_2;
 	public GameObject chat_inter;
+	public GameObject speak_to_vic;
 	public GameObject in_hand;
 	public Sprite[] items;
 
@@ -49,6 +50,28 @@ public class IG_menu : MonoBehaviour {
 	public void press4(){
 		if (panel.GetComponent<Image> ().enabled == true) {
 			gameObject.GetComponent<actions> ().DoAction (acts [3]);
+		}
+	}
+	public void pressY(){
+		if (speak_to_vic.activeSelf == false) {
+			speak_to_vic.GetComponent<InputField> ().text = "";
+			speak_to_vic.SetActive (true);
+			speak_to_vic.GetComponent<InputField> ().Select ();
+			speak_to_vic.GetComponent<InputField> ().ActivateInputField ();
+		}
+	}
+	public void pressEnter(){
+		if (speak_to_vic.activeSelf == true) {
+			gameObject.GetComponent<NetTCP> ().DoAction ("victime_talk", speak_to_vic.GetComponent<InputField> ().text);
+			Debug.Log(speak_to_vic.GetComponent<InputField> ().text);
+			speak_to_vic.GetComponent<InputField> ().text = "";
+			speak_to_vic.SetActive (false);
+		}
+	}
+	public void pressEsc(){
+		if (speak_to_vic.activeSelf == true) {
+			speak_to_vic.GetComponent<InputField> ().text = "";
+			speak_to_vic.SetActive (false);
 		}
 	}
 
